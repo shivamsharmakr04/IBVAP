@@ -1,0 +1,150 @@
+// IBVAP API Client & WebSocket Service
+
+const API_BASE = '/api/v1';
+
+async function fetchJSON(endpoint, options = {}) {
+  try {
+    const res = await fetch(`${API_BASE}${endpoint}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      ...options,
+    });
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({ detail: res.statusText }));
+      throw new Error(errorData.detail || `HTTP Error ${res.status}`);
+    }
+    return await res.json();
+  } catch (err) {
+    console.warn(`[API Warning] ${endpoint}:`, err.message);
+    throw err;
+  }
+}
+
+export const api = {
+  // Dashboard
+  getStats: () => fetchJSON('/dashboard/stats'),
+
+  // Cameras
+  getCameras: () => fetchJSON('/cameras'),
+  getCamera: (id) => fetchJSON(`/cameras/${id}`),
+  createCamera: (data) => fetchJSON('/cameras', { method: 'POST', body: JSON.stringify(data) }),
+  updateCamera: (id, data) => fetchJSON(`/cameras/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteCamera: (id) => fetchJSON(`/cameras/${id}`, { method: 'DELETE' }),
+  sendHeartbeat: (id) => fetchJSON(`/cameras/${id}/heartbeat`, { method: 'POST' }),
+
+  // Zones
+  getZones: (cameraId) => fetchJSON(`/cameras/${cameraId}/zones`),
+  createZone: (cameraId, data) => fetchJSON(`/cameras/${cameraId}/zones`, { method: 'POST', body: JSON.stringify(data) }),
+  updateZone: (zoneId, data) => fetchJSON(`/zones/${zoneId}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteZone: (zoneId) => fetchJSON(`/zones/${zoneId}`, { method: 'DELETE' }),
+
+  // Alerts
+  getAlerts: () => fetchJSON('/alerts'),
+  acknowledgeAlert: (alertId) => fetchJSON(`/alerts/${alertId}/acknowledge`, { method: 'POST' }),
+  resolveAlert: (alertId) => fetchJSON(`/alerts/${alertId}/resolve`, { method: 'POST' }),
+
+  // Events
+  getEvents: (params = {}) => {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, val]) => {
+      if (val !== undefined && val !== null && val !== '') {
+        query.append(key, val);
+      }
+    });
+    return fetchJSON(`/events?${query.toString()}`);
+  },
+
+  // Watchlist - Persons
+  getPersons: () => fetchJSON('/watchlist/persons'),
+  createPerson: (data) => fetchJSON('/watchlist/persons', { method: 'POST', body: JSON.stringify(data) }),
+  updatePerson: (id, data) => fetchJSON(`/watchlist/persons/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deletePerson: (id) => fetchJSON(`/watchlist/persons/${id}`, { method: 'DELETE' }),
+
+  // Watchlist - Vehicles
+  getVehicles: () => fetchJSON('/watchlist/vehicles'),
+  createVehicle: (data) => fetchJSON('/watchlist/vehicles', { method: 'POST', body: JSON.stringify(data) }),
+  updateVehicle: (id, data) => fetchJSON(`/watchlist/vehicles/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteVehicle: (id) => fetchJSON(`/watchlist/vehicles/${id}`, { method: 'DELETE' }),
+
+  // Simulation Trigger (Creates events with AI API Key if configured)
+  triggerSimulatedEvent: (eventData) => fetchJSON('/events', {
+    method: 'POST',
+    headers: { 'X-AI-API-Key': 'development-secret-key' },
+    body: JSON.stringify(eventData),
+  }),
+};
+
+// WebSocket Alert Manager
+export class AlertWebSocketManager {
+  constructor(onMessage, onStatusChange) {
+    this.onMessage = onMessage;
+    this.onStatusChange = onStatusChange;
+    this.ws = null;
+    this.reconnectTimer = null;
+    this.isConnecting = false;
+  }
+
+  connect() {
+    if (this.ws && (this.ws.readyState === WebSocket.OPEN || this.ws.readyState === WebSocket.CONNECTING)) {
+      return;
+    }
+
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const host = window.location.host;
+    const wsUrl = `${protocol}//${host}/ws/alerts`;
+
+    this.isConnecting = true;
+    this.onStatusChange?.('CONNECTING');
+
+    try {
+      this.ws = new WebSocket(wsUrl);
+
+      this.ws.onopen = () => {
+        this.isConnecting = false;
+        this.onStatusChange?.('CONNECTED');
+        console.log('[WebSocket] Connected to alert stream');
+      };
+
+      this.ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          this.onMessage?.(data);
+        } catch (err) {
+          console.error('[WebSocket Error] Failed to parse message:', err);
+        }
+      };
+
+      this.ws.onclose = () => {
+        this.isConnecting = false;
+        this.onStatusChange?.('DISCONNECTED');
+        this.scheduleReconnect();
+      };
+
+      this.ws.onerror = (err) => {
+        this.isConnecting = false;
+        this.onStatusChange?.('ERROR');
+        console.warn('[WebSocket Error] Connection error, fallback active.');
+      };
+    } catch (err) {
+      this.isConnecting = false;
+      this.onStatusChange?.('DISCONNECTED');
+      this.scheduleReconnect();
+    }
+  }
+
+  scheduleReconnect() {
+    if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
+    this.reconnectTimer = setTimeout(() => {
+      this.connect();
+    }, 5000);
+  }
+
+  disconnect() {
+    if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
+    if (this.ws) {
+      this.ws.close();
+    }
+  }
+}

@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+.venv/
+env/
+venv/
+
+# Build & Output
+dist/
+build/
+*.egg-info/
+
+# Databases & Media
+*.db
+*.sqlite
+*.sqlite3
+media/events/*
+media/faces/*
+media/plates/*
+media/clips/*
+
+# Environment & Secrets
+.env
+.env.local
+
+# Python Cache & Logs
+__pycache__/
+*.pyc
+*.pyo
+*.log
+
+# IDE & System
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

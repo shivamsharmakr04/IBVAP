@@ -1,0 +1,6 @@
+.env
+env
+__init__.py
+venv
+venv/
+venv\
