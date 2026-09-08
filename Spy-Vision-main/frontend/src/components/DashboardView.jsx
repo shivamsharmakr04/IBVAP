@@ -41,16 +41,58 @@ export default function DashboardView({
   onOpenSimulation,
   onTriggerWebcamAlert
 }) {
-  const [activeCamIndex, setActiveCamIndex] = useState(1); // CAM-02 (Breach)
-  const [selectedSnapshot, setSelectedSnapshot] = useState(null);
-  const [useWebcamOnCam1, setUseWebcamOnCam1] = useState(false);
-  const [commandInput, setCommandInput] = useState('');
+  const webcamVideoRef = useRef(null);
+  const hiddenCanvasRef = useRef(null);
+  const [isWebcamActive, setIsWebcamActive] = useState(false);
+  const [webcamError, setWebcamError] = useState(null);
 
-  // Overlays toggle state
-  const [showBoundingBoxes, setShowBoundingBoxes] = useState(true);
-  const [showAnprPlates, setShowAnprPlates] = useState(true);
-  const [showEmotionMeters, setShowEmotionMeters] = useState(true);
-  const [showFencePolygons, setShowFencePolygons] = useState(true);
+  const toggleWebcam = async () => {
+    if (isWebcamActive) {
+      if (webcamVideoRef.current && webcamVideoRef.current.srcObject) {
+        const tracks = webcamVideoRef.current.srcObject.getTracks();
+        tracks.forEach(track => track.stop());
+        webcamVideoRef.current.srcObject = null;
+      }
+      setIsWebcamActive(false);
+      setWebcamError(null);
+    } else {
+      try {
+        setWebcamError(null);
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (webcamVideoRef.current) {
+          webcamVideoRef.current.srcObject = stream;
+          webcamVideoRef.current.play();
+        }
+        setIsWebcamActive(true);
+      } catch (err) {
+        console.error('Webcam Access Error:', err);
+        setWebcamError('Camera permission denied or unavailable.');
+      }
+    }
+  };
+
+  const handleCaptureWebcamSnapshot = () => {
+    if (!webcamVideoRef.current || !hiddenCanvasRef.current) return;
+    const video = webcamVideoRef.current;
+    const canvas = hiddenCanvasRef.current;
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const dataUrl = canvas.toDataURL('image/jpeg');
+    
+    if (onTriggerWebcamAlert) {
+      onTriggerWebcamAlert({
+        camera_id: 1,
+        event_type: 'INTRUSION',
+        severity: 'CRITICAL',
+        confidence: 0.99,
+        snapshot_path: dataUrl,
+        message: 'Live Laptop Camera Alert: Target detected in real-time feed!'
+      });
+      alert('Snapshot captured from live laptop camera and alert sent to backend!');
+    }
+  };
 
   const activeAlerts = alerts.filter(a => a.status === 'ACTIVE');
 
@@ -261,25 +303,70 @@ export default function DashboardView({
           {/* 4 Video Feeds in 2x2 Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             
-            {/* Feed 1: CAM-01 [NORTH MAIN] */}
+            {/* Feed 1: CAM-01 [NORTH MAIN / WEBCAM] */}
             <div className="relative aspect-video bg-slate-900 rounded-2xl border border-slate-300 overflow-hidden text-xs">
-              <div className="absolute top-0 left-0 right-0 z-10 bg-slate-900/80 backdrop-blur-xs text-white px-3 py-1.5 flex items-center justify-between text-xs font-semibold">
+              <canvas ref={hiddenCanvasRef} className="hidden" />
+
+              <div className="absolute top-0 left-0 right-0 z-10 bg-slate-900/85 backdrop-blur-xs text-white px-3 py-2 flex items-center justify-between text-xs font-semibold">
                 <span className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  Cam 01: Main Gate Entry
+                  <span className={`w-2.5 h-2.5 rounded-full ${isWebcamActive ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+                  Cam 01: {isWebcamActive ? 'Live Laptop Webcam Stream' : 'Main Gate Entry'}
                 </span>
-                <span className="text-slate-300 font-mono text-[11px]">1080p • 30fps</span>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={toggleWebcam}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      isWebcamActive 
+                        ? 'bg-rose-600 hover:bg-rose-500 text-white' 
+                        : 'bg-blue-600 hover:bg-blue-500 text-white shadow-xs'
+                    }`}
+                  >
+                    {isWebcamActive ? '⏹ Turn Off Webcam' : '🎥 Turn On Laptop Webcam'}
+                  </button>
+
+                  {isWebcamActive && (
+                    <button
+                      onClick={handleCaptureWebcamSnapshot}
+                      className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold cursor-pointer shadow-xs"
+                    >
+                      📸 Snap & Alert
+                    </button>
+                  )}
+                </div>
               </div>
-              <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=80" alt="Feed 1" className="w-full h-full object-cover" />
+
+              {/* Video elements */}
+              <video
+                ref={webcamVideoRef}
+                autoPlay
+                playsInline
+                muted
+                className={`w-full h-full object-cover ${isWebcamActive ? 'block' : 'hidden'}`}
+              />
+
+              {!isWebcamActive && (
+                <img
+                  src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=80"
+                  alt="Feed 1"
+                  className="w-full h-full object-cover"
+                />
+              )}
               
               {showBoundingBoxes && (
-                <div className="absolute top-1/3 left-1/4 w-36 h-28 border-2 border-blue-400 bg-blue-500/10 rounded p-1.5 flex flex-col justify-between">
-                  <div className="bg-blue-600 text-white font-bold px-1.5 py-0.5 rounded text-[10px] w-max">
-                    Vehicle Detected 98%
+                <div className="absolute top-1/3 left-1/4 w-40 h-28 border-2 border-blue-400 bg-blue-500/10 rounded-xl p-2 flex flex-col justify-between pointer-events-none">
+                  <div className="bg-blue-600 text-white font-bold px-2 py-0.5 rounded-md text-[10px] w-max">
+                    {isWebcamActive ? 'Live Human Face 99%' : 'Vehicle Detected 98%'}
                   </div>
-                  <div className="bg-slate-900/90 text-blue-300 px-1.5 py-0.5 rounded text-[9px]">
-                    Plate: JK-02-AB-9981
+                  <div className="bg-slate-900/90 text-blue-300 px-2 py-0.5 rounded-md text-[10px]">
+                    {isWebcamActive ? 'Status: Active Target' : 'Plate: JK-02-AB-9981'}
                   </div>
+                </div>
+              )}
+
+              {webcamError && (
+                <div className="absolute bottom-2 left-2 right-2 bg-rose-900/90 text-white p-2 rounded-xl text-center text-xs font-bold">
+                  {webcamError}
                 </div>
               )}
             </div>
