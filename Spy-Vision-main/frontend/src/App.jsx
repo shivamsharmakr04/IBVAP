@@ -71,6 +71,11 @@ export default function App() {
   useEffect(() => {
     loadData();
 
+    // Live Real-Time Polling Interval (Syncs backend SQLite data every 3 seconds)
+    const pollInterval = setInterval(() => {
+      loadData();
+    }, 3000);
+
     // WebSocket Alert Stream Connection
     const wsManager = new AlertWebSocketManager(
       (data) => {
@@ -87,7 +92,10 @@ export default function App() {
     );
 
     wsManager.connect();
-    return () => wsManager.disconnect();
+    return () => {
+      clearInterval(pollInterval);
+      wsManager.disconnect();
+    };
   }, [audioEnabled]);
 
   // Alert Sound Playback
