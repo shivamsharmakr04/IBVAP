@@ -21,6 +21,17 @@ export default function App() {
   const [activeView, setActiveView] = useState('dashboard');
   const [wsStatus, setWsStatus] = useState('DISCONNECTED');
   const [audioEnabled, setAudioEnabled] = useState(true);
+  const [theme, setTheme] = useState('light'); // Default light theme as requested
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.body.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.body.classList.remove('dark');
+    }
+  }, [theme]);
 
   // Core App Data States
   const [stats, setStats] = useState(null);
@@ -204,7 +215,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050811] text-slate-100 flex flex-col font-sans">
+    <div className={`min-h-screen transition-colors duration-300 flex flex-col font-sans ${
+      theme === 'dark' ? 'bg-[#050811] text-slate-100' : 'bg-slate-50 text-slate-900'
+    }`}>
       {/* Top Navbar */}
       <Navbar
         activeView={activeView}
@@ -213,6 +226,8 @@ export default function App() {
         activeAlertCount={alerts.filter(a => a.status === 'ACTIVE').length}
         audioEnabled={audioEnabled}
         setAudioEnabled={setAudioEnabled}
+        theme={theme}
+        setTheme={setTheme}
       />
 
       {/* Main Content Router */}
@@ -277,7 +292,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950/80 py-3 px-4 text-center text-slate-500 text-xs font-mono">
+      <footer className="border-t border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 py-3 px-4 text-center text-slate-500 dark:text-slate-400 text-xs font-mono backdrop-blur-md">
         IBVAP v1.0.0 — Intelligent Border Video Analytics Platform | Ministry of Home Affairs | Enterprise Border Command
       </footer>
     </div>

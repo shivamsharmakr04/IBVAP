@@ -69,63 +69,63 @@ export default function DashboardView({
       {/* Top Metrics Header */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Metric 1: Cameras */}
-        <div className="glass-panel rounded-xl p-4 border border-slate-800 flex items-center justify-between">
+        <div className="glass-panel rounded-xl p-4 border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-xs">
           <div>
-            <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">CCTV & Webcam Feeds</p>
+            <p className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">CCTV & Webcam Feeds</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl font-bold font-tactical text-slate-100">{stats?.cameras?.online || cameras.length}</span>
-              <span className="text-xs font-mono text-emerald-400">/ {stats?.cameras?.total || cameras.length} Active</span>
+              <span className="text-2xl font-bold font-tactical text-slate-900 dark:text-slate-100">{stats?.cameras?.online || cameras.length}</span>
+              <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold">/ {stats?.cameras?.total || cameras.length} Active</span>
             </div>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-cyan-950/60 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+          <div className="w-10 h-10 rounded-lg bg-cyan-50 dark:bg-cyan-950/60 border border-cyan-300 dark:border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
             <Video className="w-5 h-5" />
           </div>
         </div>
 
         {/* Metric 2: Active Alerts */}
-        <div className={`glass-panel rounded-xl p-4 border flex items-center justify-between transition-all ${
-          activeAlerts.length > 0 ? 'border-rose-500/50 bg-rose-950/20' : 'border-slate-800'
+        <div className={`glass-panel rounded-xl p-4 border flex items-center justify-between transition-all shadow-xs ${
+          activeAlerts.length > 0 ? 'border-rose-300 dark:border-rose-500/50 bg-rose-50/80 dark:bg-rose-950/20' : 'border-slate-200 dark:border-slate-800'
         }`}>
           <div>
-            <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">Active Threat Alerts</p>
+            <p className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">Active Threat Alerts</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className={`text-2xl font-bold font-tactical ${activeAlerts.length > 0 ? 'text-rose-400 animate-pulse' : 'text-slate-100'}`}>
+              <span className={`text-2xl font-bold font-tactical ${activeAlerts.length > 0 ? 'text-rose-600 dark:text-rose-400 animate-pulse' : 'text-slate-900 dark:text-slate-100'}`}>
                 {activeAlerts.length}
               </span>
-              <span className="text-xs text-slate-400">Requires Action</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">Requires Action</span>
             </div>
           </div>
           <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-            activeAlerts.length > 0 ? 'bg-rose-950 border border-rose-500/40 text-rose-400' : 'bg-slate-900 border border-slate-800 text-slate-400'
+            activeAlerts.length > 0 ? 'bg-rose-100 dark:bg-rose-950 border border-rose-300 dark:border-rose-500/40 text-rose-600 dark:text-rose-400' : 'bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500'
           }`}>
             <ShieldAlert className="w-5 h-5" />
           </div>
         </div>
 
         {/* Metric 3: Intrusions & Reaction Alerts */}
-        <div className="glass-panel rounded-xl p-4 border border-slate-800 flex items-center justify-between">
+        <div className="glass-panel rounded-xl p-4 border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-xs">
           <div>
-            <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">Intrusion / Reaction Hits</p>
+            <p className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">Intrusion / Reaction Hits</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl font-bold font-tactical text-amber-400">{stats?.intrusions_today || 14}</span>
-              <span className="text-xs text-slate-400">Today</span>
+              <span className="text-2xl font-bold font-tactical text-amber-600 dark:text-amber-400">{stats?.intrusions_today || 14}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">Today</span>
             </div>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-amber-950/60 border border-amber-500/30 flex items-center justify-center text-amber-400">
+          <div className="w-10 h-10 rounded-lg bg-amber-50 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
             <Smile className="w-5 h-5" />
           </div>
         </div>
 
         {/* Metric 4: Object Detections */}
-        <div className="glass-panel rounded-xl p-4 border border-slate-800 flex items-center justify-between">
+        <div className="glass-panel rounded-xl p-4 border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-xs">
           <div>
-            <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">Objects Identified</p>
+            <p className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">Objects Identified</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl font-bold font-tactical text-emerald-400">{(stats?.vehicles_today || 84) + (stats?.people_today || 142) + 38}</span>
-              <span className="text-xs text-slate-400">Objects Scanned</span>
+              <span className="text-2xl font-bold font-tactical text-emerald-600 dark:text-emerald-400">{(stats?.vehicles_today || 84) + (stats?.people_today || 142) + 38}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">Objects Scanned</span>
             </div>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+          <div className="w-10 h-10 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
             <Package className="w-5 h-5" />
           </div>
         </div>
@@ -136,13 +136,13 @@ export default function DashboardView({
         {/* Left 3 Columns: Live Camera Streams + Facial & Object Telemetry Bar */}
         <div className="lg:col-span-3 space-y-4">
           {/* Stream Header Controls */}
-          <div className="flex items-center justify-between bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+          <div className="flex items-center justify-between bg-white/90 dark:bg-slate-900/80 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
             <div className="flex items-center gap-3">
-              <h2 className="font-tactical text-lg font-bold text-slate-100 uppercase tracking-wider flex items-center gap-2">
-                <Video className="w-5 h-5 text-cyan-400" />
+              <h2 className="font-tactical text-lg font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-2">
+                <Video className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
                 Live Camera Feeds ({cameras.length})
               </h2>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 border border-emerald-500/40 text-emerald-400">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-500/40 text-emerald-700 dark:text-emerald-400 font-semibold">
                 FACE REACTION & OBJECT AI ACTIVE
               </span>
             </div>
@@ -152,10 +152,10 @@ export default function DashboardView({
               {/* Laptop Webcam Toggle */}
               <button
                 onClick={() => setUseWebcamOnCam1(!useWebcamOnCam1)}
-                className={`px-3 py-1 rounded-lg text-xs font-bold font-mono border flex items-center gap-1.5 transition-all ${
+                className={`px-3 py-1 rounded-lg text-xs font-bold font-mono border flex items-center gap-1.5 transition-all cursor-pointer ${
                   useWebcamOnCam1 
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20' 
-                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-emerald-600 to-teal-500 text-white dark:text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/20' 
+                    : 'bg-slate-100 dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 <Camera className="w-3.5 h-3.5" />
@@ -164,32 +164,32 @@ export default function DashboardView({
 
               <button
                 onClick={() => setOverlayEnabled(!overlayEnabled)}
-                className={`px-3 py-1 rounded-lg text-xs font-semibold border flex items-center gap-1.5 transition-all ${
-                  overlayEnabled ? 'bg-cyan-950 border-cyan-500/50 text-cyan-300' : 'bg-slate-800 border-slate-700 text-slate-400'
+                className={`px-3 py-1 rounded-lg text-xs font-semibold border flex items-center gap-1.5 transition-all cursor-pointer ${
+                  overlayEnabled ? 'bg-cyan-50 dark:bg-cyan-950 border-cyan-300 dark:border-cyan-500/50 text-cyan-800 dark:text-cyan-300' : 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400'
                 }`}
               >
                 <Eye className="w-3.5 h-3.5" />
                 AI Overlays {overlayEnabled ? 'ON' : 'OFF'}
               </button>
 
-              <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800">
+              <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-950 p-1 rounded-lg border border-slate-200 dark:border-slate-800">
                 <button
                   onClick={() => setGridCols(1)}
-                  className={`p-1.5 rounded text-xs ${gridCols === 1 ? 'bg-cyan-500 text-black font-bold' : 'text-slate-400 hover:text-white'}`}
+                  className={`p-1.5 rounded text-xs cursor-pointer ${gridCols === 1 ? 'bg-cyan-600 text-white font-bold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                   title="Single Feed View"
                 >
                   1x1
                 </button>
                 <button
                   onClick={() => setGridCols(2)}
-                  className={`p-1.5 rounded text-xs ${gridCols === 2 ? 'bg-cyan-500 text-black font-bold' : 'text-slate-400 hover:text-white'}`}
+                  className={`p-1.5 rounded text-xs cursor-pointer ${gridCols === 2 ? 'bg-cyan-600 text-white font-bold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                   title="Quad View"
                 >
                   2x2
                 </button>
                 <button
                   onClick={() => setGridCols(3)}
-                  className={`p-1.5 rounded text-xs ${gridCols === 3 ? 'bg-cyan-500 text-black font-bold' : 'text-slate-400 hover:text-white'}`}
+                  className={`p-1.5 rounded text-xs cursor-pointer ${gridCols === 3 ? 'bg-cyan-600 text-white font-bold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                   title="9 Grid View"
                 >
                   3x3
@@ -198,7 +198,7 @@ export default function DashboardView({
 
               <button
                 onClick={onOpenSimulation}
-                className="px-3 py-1 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-xs flex items-center gap-1 hover:brightness-110 shadow-lg shadow-amber-500/20"
+                className="px-3 py-1 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-white dark:text-slate-950 font-bold text-xs flex items-center gap-1 hover:brightness-110 shadow-md shadow-amber-500/20 cursor-pointer"
               >
                 <Zap className="w-3.5 h-3.5 fill-current" />
                 AI Detection Engine
@@ -207,44 +207,44 @@ export default function DashboardView({
           </div>
 
           {/* Real-Time Facial Reaction & Object Telemetry HUD Bar */}
-          <div className="glass-panel rounded-xl p-4 border border-cyan-500/40 bg-slate-950/90 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+          <div className="glass-panel rounded-xl p-4 border border-cyan-300 dark:border-cyan-500/40 bg-white/90 dark:bg-slate-950/90 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono shadow-xs">
             {/* Box 1: Face Reaction Analysis */}
-            <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-1.5">
-              <div className="flex items-center justify-between text-slate-400">
-                <span className="flex items-center gap-1.5 text-cyan-400 font-bold">
-                  <Smile className="w-4 h-4 text-cyan-400" />
+            <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5">
+              <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
+                <span className="flex items-center gap-1.5 text-cyan-600 dark:text-cyan-400 font-bold">
+                  <Smile className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                   FACE REACTION ANALYSIS
                 </span>
-                <span className="text-amber-400 font-bold animate-pulse">LIVE ANALYZING</span>
+                <span className="text-amber-600 dark:text-amber-400 font-bold animate-pulse">LIVE ANALYZING</span>
               </div>
               <div className="flex items-baseline justify-between pt-1">
-                <span className="text-slate-200">Expression / Reaction:</span>
-                <span className="text-rose-400 font-bold">{liveTelemetry.facialReaction}</span>
+                <span className="text-slate-700 dark:text-slate-200">Expression / Reaction:</span>
+                <span className="text-rose-600 dark:text-rose-400 font-bold">{liveTelemetry.facialReaction}</span>
               </div>
               <div className="flex items-baseline justify-between text-[11px]">
-                <span className="text-slate-400">Facial Stress Metric:</span>
-                <span className="text-amber-400 font-bold">{liveTelemetry.stressLevel}% STRESSED</span>
+                <span className="text-slate-500 dark:text-slate-400">Facial Stress Metric:</span>
+                <span className="text-amber-600 dark:text-amber-400 font-bold">{liveTelemetry.stressLevel}% STRESSED</span>
               </div>
-              <div className="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden">
+              <div className="w-full bg-slate-200 dark:bg-slate-950 h-1.5 rounded-full overflow-hidden">
                 <div className="bg-gradient-to-r from-amber-500 to-rose-500 h-full w-[87%] animate-pulse" />
               </div>
             </div>
 
             {/* Box 2: Object Detection & Identification */}
-            <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-1.5">
-              <div className="flex items-center justify-between text-slate-400">
-                <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
-                  <Package className="w-4 h-4 text-emerald-400" />
+            <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5">
+              <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
+                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-bold">
+                  <Package className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   OBJECT CLASSIFICATION (3)
                 </span>
-                <span className="text-emerald-400 font-bold">YOLOv11 MULTI-OBJ</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">YOLOv11 MULTI-OBJ</span>
               </div>
               <div className="space-y-1 pt-1 text-[11px]">
                 {liveTelemetry.detectedObjects.map(obj => (
                   <div key={obj.id} className="flex items-center justify-between">
-                    <span className="text-slate-300">• {obj.class}</span>
+                    <span className="text-slate-700 dark:text-slate-300">• {obj.class}</span>
                     <span className={`font-bold ${
-                      obj.threat === 'CRITICAL' ? 'text-rose-400' : obj.threat === 'HIGH' ? 'text-amber-400' : 'text-cyan-400'
+                      obj.threat === 'CRITICAL' ? 'text-rose-600 dark:text-rose-400' : obj.threat === 'HIGH' ? 'text-amber-600 dark:text-amber-400' : 'text-cyan-600 dark:text-cyan-400'
                     }`}>
                       {obj.confidence} [{obj.threat}]
                     </span>
@@ -254,21 +254,21 @@ export default function DashboardView({
             </div>
 
             {/* Box 3: Intrusion Threat Diagnostic */}
-            <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-1.5">
-              <div className="flex items-center justify-between text-slate-400">
-                <span className="flex items-center gap-1.5 text-rose-400 font-bold">
-                  <Crosshair className="w-4 h-4 text-rose-400" />
+            <div className="p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5">
+              <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
+                <span className="flex items-center gap-1.5 text-rose-600 dark:text-rose-400 font-bold">
+                  <Crosshair className="w-4 h-4 text-rose-600 dark:text-rose-400" />
                   INTRUSION RISK DIAGNOSTIC
                 </span>
-                <span className="px-1.5 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-500/40 text-[9px]">
+                <span className="px-1.5 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-400 border border-rose-300 dark:border-rose-500/40 text-[9px] font-bold">
                   FENCE BREACH
                 </span>
               </div>
-              <p className="text-slate-300 pt-1 text-[11px]">
-                Proximity: <strong className="text-amber-400">{liveTelemetry.intrusionDistance}</strong>
+              <p className="text-slate-700 dark:text-slate-300 pt-1 text-[11px]">
+                Proximity: <strong className="text-amber-600 dark:text-amber-400">{liveTelemetry.intrusionDistance}</strong>
               </p>
-              <p className="text-slate-200 text-[11px]">
-                Composite Risk: <strong className="text-rose-400">{liveTelemetry.intrusionThreatScore}</strong>
+              <p className="text-slate-800 dark:text-slate-200 text-[11px]">
+                Composite Risk: <strong className="text-rose-600 dark:text-rose-400">{liveTelemetry.intrusionThreatScore}</strong>
               </p>
             </div>
           </div>
@@ -292,15 +292,15 @@ export default function DashboardView({
 
         {/* Right 1 Column: Real-Time Alerts Drawer */}
         <div className="space-y-4">
-          <div className="glass-panel rounded-xl p-4 border border-slate-800 space-y-4 flex flex-col h-[calc(100vh-140px)] sticky top-20">
+          <div className="glass-panel rounded-xl p-4 border border-slate-200 dark:border-slate-800 space-y-4 flex flex-col h-[calc(100vh-140px)] sticky top-20 shadow-xs">
             {/* Header & Filter */}
-            <div className="space-y-2 pb-2 border-b border-slate-800">
+            <div className="space-y-2 pb-2 border-b border-slate-200 dark:border-slate-800">
               <div className="flex items-center justify-between">
-                <h3 className="font-tactical text-base font-bold text-slate-100 uppercase tracking-wider flex items-center gap-2">
-                  <ShieldAlert className="w-4 h-4 text-rose-400 animate-pulse" />
+                <h3 className="font-tactical text-base font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-2">
+                  <ShieldAlert className="w-4 h-4 text-rose-600 dark:text-rose-400 animate-pulse" />
                   Live Alert Stream
                 </h3>
-                <span className="px-2 py-0.5 rounded-full bg-rose-950 border border-rose-500/40 text-rose-400 font-mono text-[10px]">
+                <span className="px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 border border-rose-300 dark:border-rose-500/40 text-rose-700 dark:text-rose-400 font-mono text-[10px] font-bold">
                   {activeAlerts.length} Active
                 </span>
               </div>
@@ -311,10 +311,10 @@ export default function DashboardView({
                   <button
                     key={sev}
                     onClick={() => setSelectedSeverity(sev)}
-                    className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold transition-all ${
+                    className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold transition-all cursor-pointer ${
                       selectedSeverity === sev 
-                        ? 'bg-cyan-500 text-slate-950' 
-                        : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+                        ? 'bg-cyan-600 text-white' 
+                        : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 border border-slate-200 dark:border-slate-800'
                     }`}
                   >
                     {sev}
@@ -326,7 +326,7 @@ export default function DashboardView({
             {/* Alert List */}
             <div className="flex-1 overflow-y-auto space-y-3 pr-1">
               {filteredAlerts.length === 0 ? (
-                <div className="text-center py-10 text-slate-500 text-xs">
+                <div className="text-center py-10 text-slate-400 dark:text-slate-500 text-xs">
                   No alerts matching selected severity.
                 </div>
               ) : (
@@ -347,18 +347,18 @@ export default function DashboardView({
 
       {/* Snapshot Preview Modal */}
       {selectedSnapshot && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass-panel-glow max-w-3xl w-full rounded-2xl p-4 space-y-4 border border-cyan-500/40">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-              <h3 className="font-tactical text-lg font-bold text-cyan-400 uppercase">Alert Capture Snapshot & Reaction Telemetry</h3>
+        <div className="fixed inset-0 z-50 bg-slate-900/60 dark:bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="glass-panel-glow max-w-3xl w-full rounded-2xl p-4 space-y-4 border border-cyan-400 dark:border-cyan-500/40">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
+              <h3 className="font-tactical text-lg font-bold text-cyan-600 dark:text-cyan-400 uppercase">Alert Capture Snapshot & Reaction Telemetry</h3>
               <button 
                 onClick={() => setSelectedSnapshot(null)}
-                className="text-slate-400 hover:text-white font-mono text-sm px-2 py-1 bg-slate-900 rounded"
+                className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-mono text-sm px-2 py-1 bg-slate-100 dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-800 cursor-pointer"
               >
                 ✕ Close
               </button>
             </div>
-            <div className="relative rounded-xl overflow-hidden bg-black border border-slate-800 max-h-[70vh] flex items-center justify-center">
+            <div className="relative rounded-xl overflow-hidden bg-slate-950 border border-slate-800 max-h-[70vh] flex items-center justify-center">
               <img src={selectedSnapshot} alt="Alert Snapshot" className="max-h-[65vh] w-auto object-contain" />
               {/* Simulated AI box overlay */}
               <div className="absolute top-1/4 left-1/3 w-56 h-48 border-2 border-rose-500 rounded bg-rose-500/20 flex flex-col justify-between p-2 font-mono">
@@ -565,21 +565,21 @@ function CameraFeedCard({ camera, isWebcamFeed, overlayEnabled, onSelectZone, on
   };
 
   return (
-    <div className={`glass-panel rounded-xl overflow-hidden border transition-all flex flex-col group ${
-      isWebcamFeed ? 'border-emerald-500/60 ring-2 ring-emerald-500/20' : 'border-slate-800 hover:border-cyan-500/40'
+    <div className={`glass-panel rounded-xl overflow-hidden border transition-all flex flex-col group shadow-xs ${
+      isWebcamFeed ? 'border-emerald-400 dark:border-emerald-500/60 ring-2 ring-emerald-400/20 dark:ring-emerald-500/20' : 'border-slate-200 dark:border-slate-800 hover:border-cyan-400 dark:hover:border-cyan-500/40'
     }`}>
       {/* Feed Header */}
-      <div className="bg-slate-950/80 px-3 py-2 border-b border-slate-800 flex items-center justify-between">
+      <div className="bg-slate-100/90 dark:bg-slate-950/80 px-3 py-2 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
         <div className="flex items-center gap-2 truncate">
-          <span className={`w-2 h-2 rounded-full ${isWebcamFeed ? 'bg-emerald-400 animate-pulse' : 'bg-cyan-400'}`} />
-          <span className="font-tactical font-bold text-xs text-slate-200 uppercase truncate">
+          <span className={`w-2 h-2 rounded-full ${isWebcamFeed ? 'bg-emerald-500 animate-pulse' : 'bg-cyan-500'}`} />
+          <span className="font-tactical font-bold text-xs text-slate-800 dark:text-slate-200 uppercase truncate">
             {isWebcamFeed ? 'Laptop Webcam - Real-Time Reaction & Object Analytics' : camera.name}
           </span>
         </div>
         <div className="flex items-center gap-1 font-mono text-[10px]">
-          <span className="px-1.5 py-0.5 rounded bg-slate-900 text-cyan-400 border border-slate-800">30 FPS</span>
+          <span className="px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-slate-900 text-cyan-700 dark:text-cyan-400 border border-slate-300 dark:border-slate-800 font-semibold">30 FPS</span>
           <span className={`px-1.5 py-0.5 rounded font-bold ${
-            isWebcamFeed ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/40' : 'bg-cyan-950 text-cyan-400 border border-cyan-500/30'
+            isWebcamFeed ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/40' : 'bg-cyan-100 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-400 border border-cyan-300 dark:border-cyan-500/30'
           }`}>
             {isWebcamFeed ? 'LIVE WEBCAM' : 'ONLINE'}
           </span>
@@ -601,7 +601,7 @@ function CameraFeedCard({ camera, isWebcamFeed, overlayEnabled, onSelectZone, on
               <div className="absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center text-rose-400 p-4 text-center text-xs font-mono">
                 <Camera className="w-8 h-8 mb-2 stroke-1" />
                 <p>{webcamError}</p>
-                <p className="text-[10px] text-slate-500 mt-1">Please allow camera permissions in your browser address bar.</p>
+                <p className="text-[10px] text-slate-400 mt-1">Please allow camera permissions in your browser address bar.</p>
               </div>
             )}
           </>
@@ -615,8 +615,8 @@ function CameraFeedCard({ camera, isWebcamFeed, overlayEnabled, onSelectZone, on
             className="w-full h-full object-cover opacity-85"
           />
         ) : (
-          <div className="text-slate-600 font-mono text-xs flex flex-col items-center gap-2">
-            <Video className="w-8 h-8 stroke-1 text-slate-700" />
+          <div className="text-slate-400 font-mono text-xs flex flex-col items-center gap-2">
+            <Video className="w-8 h-8 stroke-1 text-slate-500" />
             STREAM DISCONNECTED
           </div>
         )}
@@ -636,7 +636,7 @@ function CameraFeedCard({ camera, isWebcamFeed, overlayEnabled, onSelectZone, on
           {isWebcamFeed ? (
             <button
               onClick={handleCaptureWebcamAlert}
-              className="px-3 py-1.5 bg-rose-600 text-white font-bold text-xs rounded-lg hover:bg-rose-500 flex items-center gap-1.5 shadow-lg shadow-rose-600/30 animate-bounce"
+              className="px-3 py-1.5 bg-rose-600 text-white font-bold text-xs rounded-lg hover:bg-rose-500 flex items-center gap-1.5 shadow-lg shadow-rose-600/30 animate-bounce cursor-pointer"
             >
               <Camera className="w-4 h-4" />
               Generate Threat & Reaction Report
@@ -644,7 +644,7 @@ function CameraFeedCard({ camera, isWebcamFeed, overlayEnabled, onSelectZone, on
           ) : (
             <button
               onClick={onSelectZone}
-              className="px-3 py-1.5 bg-cyan-500 text-slate-950 font-bold text-xs rounded-lg hover:bg-cyan-400 flex items-center gap-1 shadow-lg"
+              className="px-3 py-1.5 bg-cyan-600 text-white font-bold text-xs rounded-lg hover:bg-cyan-500 flex items-center gap-1 shadow-lg cursor-pointer"
             >
               <Sliders className="w-3.5 h-3.5" />
               Configure Zones
@@ -653,11 +653,11 @@ function CameraFeedCard({ camera, isWebcamFeed, overlayEnabled, onSelectZone, on
         </div>
 
         {/* Bottom Tag Overlay */}
-        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono text-slate-300 pointer-events-none">
+        <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono text-slate-200 pointer-events-none">
           <span className="bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800">
             {isWebcamFeed ? 'Laptop Camera Device 0' : (camera.location || 'Border Outpost Gate')}
           </span>
-          <span className="bg-cyan-950/90 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30">
+          <span className="bg-cyan-950/90 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30 font-semibold">
             {isWebcamFeed ? 'Face Reaction + Object Identification' : 'ANPR + AI Active'}
           </span>
         </div>
@@ -674,14 +674,14 @@ function AlertItem({ alert, onAcknowledge, onResolve, onViewSnapshot }) {
   const isAcknowledged = alert.status === 'ACKNOWLEDGED';
 
   const severityBg = isCritical
-    ? 'bg-rose-950 border-rose-500/50 text-rose-400'
+    ? 'bg-rose-100 dark:bg-rose-950 border-rose-300 dark:border-rose-500/50 text-rose-700 dark:text-rose-400'
     : isHigh
-    ? 'bg-amber-950 border-amber-500/50 text-amber-400'
-    : 'bg-slate-900 border-slate-800 text-slate-300';
+    ? 'bg-amber-100 dark:bg-amber-950 border-amber-300 dark:border-amber-500/50 text-amber-700 dark:text-amber-400'
+    : 'bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300';
 
   return (
-    <div className={`p-3 rounded-xl border transition-all text-xs space-y-2 ${
-      isCritical && !isResolved ? 'bg-rose-950/30 border-rose-500/40 animate-alert-pulse' : 'bg-slate-900/60 border-slate-800'
+    <div className={`p-3 rounded-xl border transition-all text-xs space-y-2 shadow-2xs ${
+      isCritical && !isResolved ? 'bg-rose-50/90 dark:bg-rose-950/30 border-rose-300 dark:border-rose-500/40 animate-alert-pulse' : 'bg-slate-50/80 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800'
     }`}>
       {/* Alert Header */}
       <div className="flex items-start justify-between gap-2">
@@ -689,17 +689,17 @@ function AlertItem({ alert, onAcknowledge, onResolve, onViewSnapshot }) {
           <span className={`px-1.5 py-0.5 rounded font-mono font-bold text-[9px] border ${severityBg}`}>
             {alert.severity}
           </span>
-          <span className="font-mono text-[10px] text-slate-400 uppercase">
+          <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">
             {alert.event_type}
           </span>
         </div>
-        <span className="font-mono text-[10px] text-slate-500">
+        <span className="font-mono text-[10px] text-slate-400 dark:text-slate-500">
           {new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
         </span>
       </div>
 
       {/* Alert Message */}
-      <p className="text-slate-200 font-medium text-xs leading-relaxed">
+      <p className="text-slate-800 dark:text-slate-200 font-medium text-xs leading-relaxed">
         {alert.message}
       </p>
 
@@ -707,7 +707,7 @@ function AlertItem({ alert, onAcknowledge, onResolve, onViewSnapshot }) {
       {alert.snapshot_path && (
         <div 
           onClick={onViewSnapshot}
-          className="relative rounded-lg overflow-hidden border border-slate-800 cursor-pointer h-20 group"
+          className="relative rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 cursor-pointer h-20 group shadow-2xs"
         >
           <img src={alert.snapshot_path} alt="Alert Snapshot" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
           <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/10 flex items-center justify-center text-white font-mono text-[10px] gap-1">
@@ -717,9 +717,9 @@ function AlertItem({ alert, onAcknowledge, onResolve, onViewSnapshot }) {
       )}
 
       {/* Actions */}
-      <div className="flex items-center justify-between pt-1 border-t border-slate-800/60 text-[11px]">
-        <span className="font-mono text-slate-400 text-[10px]">
-          Status: <strong className={isResolved ? 'text-emerald-400' : isAcknowledged ? 'text-amber-400' : 'text-rose-400'}>
+      <div className="flex items-center justify-between pt-1 border-t border-slate-200/80 dark:border-slate-800/60 text-[11px]">
+        <span className="font-mono text-slate-500 dark:text-slate-400 text-[10px]">
+          Status: <strong className={isResolved ? 'text-emerald-600 dark:text-emerald-400' : isAcknowledged ? 'text-amber-600 dark:text-amber-400' : 'text-rose-600 dark:text-rose-400'}>
             {alert.status}
           </strong>
         </span>
@@ -728,7 +728,7 @@ function AlertItem({ alert, onAcknowledge, onResolve, onViewSnapshot }) {
           {!isAcknowledged && !isResolved && (
             <button
               onClick={onAcknowledge}
-              className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 hover:bg-amber-500/40 font-mono text-[10px]"
+              className="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/30 hover:bg-amber-200 dark:hover:bg-amber-500/40 font-mono text-[10px] font-bold cursor-pointer"
             >
               ACK
             </button>
@@ -737,7 +737,7 @@ function AlertItem({ alert, onAcknowledge, onResolve, onViewSnapshot }) {
           {!isResolved && (
             <button
               onClick={onResolve}
-              className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/40 font-mono text-[10px]"
+              className="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30 hover:bg-emerald-200 dark:hover:bg-emerald-500/40 font-mono text-[10px] font-bold cursor-pointer"
             >
               RESOLVE
             </button>

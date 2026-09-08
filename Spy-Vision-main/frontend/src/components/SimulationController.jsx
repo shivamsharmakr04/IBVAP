@@ -10,8 +10,8 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
       id: 'REACTION_ANALYSIS',
       title: 'Real-Time Facial Reaction & Emotion Analysis',
       icon: Smile,
-      color: 'from-pink-600 to-rose-500',
-      textColor: 'text-pink-400',
+      color: 'from-pink-600 to-rose-500 text-white',
+      textColor: 'text-pink-600 dark:text-pink-400',
       description: 'Analyzes facial expressions and stress levels: Detects AGITATED / HIGH STRESS emotion on target near fence line.',
       data: {
         camera_id: selectedCamId,
@@ -27,8 +27,8 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
       id: 'OBJECT_DETECTED',
       title: 'Object Classification & Threat Identification',
       icon: Package,
-      color: 'from-amber-600 to-orange-500',
-      textColor: 'text-amber-400',
+      color: 'from-amber-600 to-orange-500 text-white',
+      textColor: 'text-amber-600 dark:text-amber-400',
       description: 'Identifies non-person objects: Unattended Backpack / Hazardous Parcel spotted inside Restricted Zone Alpha.',
       data: {
         camera_id: selectedCamId,
@@ -43,8 +43,8 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
       id: 'INTRUSION',
       title: 'Border Fence Breach Intrusion',
       icon: ShieldAlert,
-      color: 'from-rose-600 to-red-500',
-      textColor: 'text-rose-400',
+      color: 'from-rose-600 to-red-500 text-white',
+      textColor: 'text-rose-600 dark:text-rose-400',
       description: 'Simulates 2 unauthorized individuals breaching virtual fence zone at BOP Gate 4.',
       data: {
         camera_id: selectedCamId,
@@ -59,8 +59,8 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
       id: 'ANPR_MATCH',
       title: 'ANPR Watchlist Plate Hit',
       icon: Car,
-      color: 'from-cyan-600 to-blue-500',
-      textColor: 'text-cyan-400',
+      color: 'from-cyan-600 to-blue-500 text-white',
+      textColor: 'text-cyan-600 dark:text-cyan-400',
       description: 'Simulates ANPR reading plate "JK-02-AB-9981" matching high-risk vehicle watchlist.',
       data: {
         camera_id: selectedCamId,
@@ -87,36 +87,36 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
   return (
     <div className="p-4 md:p-6 space-y-6 max-w-[1920px] mx-auto">
       {/* Banner */}
-      <div className="glass-panel-glow p-6 rounded-2xl border border-cyan-500/40 bg-gradient-to-r from-slate-950 via-slate-900 to-cyan-950/40 space-y-3">
+      <div className="glass-panel-glow p-6 rounded-2xl border border-cyan-300 dark:border-cyan-500/40 bg-gradient-to-r from-slate-50 via-white to-cyan-50 dark:from-slate-950 dark:via-slate-900 dark:to-cyan-950/40 space-y-3 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-cyan-500/20 border border-cyan-500/50 flex items-center justify-center text-cyan-400">
+          <div className="w-12 h-12 rounded-xl bg-cyan-100 dark:bg-cyan-500/20 border border-cyan-300 dark:border-cyan-500/50 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
             <Sparkles className="w-7 h-7" />
           </div>
           <div>
-            <h2 className="font-tactical text-2xl font-bold text-cyan-400 uppercase tracking-wider">
+            <h2 className="font-tactical text-2xl font-bold text-cyan-700 dark:text-cyan-400 uppercase tracking-wider">
               REAL-TIME AI DETECTION, OBJECT & FACIAL REACTION ENGINE
             </h2>
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-slate-600 dark:text-slate-300">
               Trigger facial emotion analysis, object identification, and intrusion report events to test real-time WebSocket alert processing.
             </p>
           </div>
         </div>
 
         {lastTriggered && (
-          <div className="p-2.5 bg-emerald-950/80 rounded-lg border border-emerald-500/40 text-xs font-mono text-emerald-300 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/80 rounded-lg border border-emerald-300 dark:border-emerald-500/40 text-xs font-mono text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>AI Event Broadcast Triggered: <strong>{lastTriggered}</strong></span>
           </div>
         )}
       </div>
 
       {/* Camera Target Selector */}
-      <div className="flex items-center gap-3 bg-slate-900 p-4 rounded-xl border border-slate-800">
-        <span className="text-xs font-mono text-slate-300 uppercase font-bold">Target CCTV Stream for AI Analysis:</span>
+      <div className="flex items-center gap-3 bg-white/90 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
+        <span className="text-xs font-mono text-slate-700 dark:text-slate-300 uppercase font-bold">Target CCTV Stream for AI Analysis:</span>
         <select
           value={selectedCamId}
           onChange={(e) => setSelectedCamId(Number(e.target.value))}
-          className="bg-slate-950 border border-slate-700 text-cyan-400 font-mono text-xs rounded-lg px-3 py-2 font-bold focus:outline-none focus:border-cyan-500"
+          className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-cyan-700 dark:text-cyan-400 font-mono text-xs rounded-lg px-3 py-2 font-bold focus:outline-none focus:border-cyan-500 cursor-pointer"
         >
           {cameras.map((c) => (
             <option key={c.id} value={c.id}>
@@ -131,20 +131,20 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
         {presets.map((p) => {
           const Icon = p.icon;
           return (
-            <div key={p.id} className="glass-panel rounded-2xl p-6 border border-slate-800 space-y-4 hover:border-cyan-500/40 transition-all flex flex-col justify-between">
+            <div key={p.id} className="glass-panel rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4 hover:border-cyan-400 dark:hover:border-cyan-500/40 transition-all flex flex-col justify-between shadow-xs">
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center ${p.textColor}`}>
+                  <div className={`w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-center ${p.textColor}`}>
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="font-tactical text-lg font-bold text-slate-100 uppercase">{p.title}</h3>
+                  <h3 className="font-tactical text-lg font-bold text-slate-900 dark:text-slate-100 uppercase">{p.title}</h3>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed">{p.description}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{p.description}</p>
               </div>
 
               <button
                 onClick={() => handleTrigger(p)}
-                className={`w-full py-3 rounded-xl font-tactical font-bold text-slate-950 text-sm uppercase tracking-wider bg-gradient-to-r ${p.color} hover:brightness-110 flex items-center justify-center gap-2 shadow-lg shadow-amber-500/10`}
+                className={`w-full py-3 rounded-xl font-tactical font-bold text-white text-sm uppercase tracking-wider bg-gradient-to-r ${p.color} hover:brightness-110 flex items-center justify-center gap-2 shadow-md cursor-pointer`}
               >
                 <Zap className="w-4 h-4 fill-current" />
                 Trigger {p.id} AI Event
