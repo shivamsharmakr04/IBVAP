@@ -46,6 +46,13 @@ export default function DashboardView({
   const [isWebcamActive, setIsWebcamActive] = useState(false);
   const [webcamError, setWebcamError] = useState(null);
 
+  // Overlay state toggles
+  const [showBoundingBoxes, setShowBoundingBoxes] = useState(true);
+  const [showAnprPlates, setShowAnprPlates] = useState(true);
+  const [showEmotionMeters, setShowEmotionMeters] = useState(true);
+  const [showFencePolygons, setShowFencePolygons] = useState(true);
+  const [commandInput, setCommandInput] = useState('');
+
   const toggleWebcam = async () => {
     if (isWebcamActive) {
       if (webcamVideoRef.current && webcamVideoRef.current.srcObject) {
