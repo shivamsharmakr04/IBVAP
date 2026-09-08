@@ -81,69 +81,77 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
   };
 
   return (
-    <div className="p-4 md:p-6 space-y-6 max-w-[1920px] mx-auto font-sans">
+    <div className="p-4 md:p-6 space-y-6 max-w-[1920px] mx-auto font-mono text-slate-900 select-none">
       {/* Header */}
-      <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs space-y-3">
+      <div className="tactical-card p-4 space-y-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950 flex items-center justify-center text-blue-600 dark:text-blue-400">
-            <Sparkles className="w-6 h-6" />
+          <div className="w-8 h-8 rounded bg-slate-100 border border-slate-300 flex items-center justify-center text-[#00a896]">
+            <Sparkles className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-              AI Detection Simulator
-            </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Trigger simulated surveillance alerts to test real-time notification feeds.
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#00a896] animate-pulse" />
+              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900">
+                AI DETECTION INTRUSION SIMULATOR // DRILL CONTROLLER
+              </h2>
+            </div>
+            <p className="text-[11px] text-slate-500 font-mono mt-0.5">
+              Trigger synthetic surveillance alert events to test real-time perimeter feeds and lockouts.
             </p>
           </div>
         </div>
 
         {lastTriggered && (
-          <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950 rounded-lg border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-            <span>Simulated Event Triggered: <strong>{lastTriggered}</strong></span>
+          <div className="p-2.5 bg-emerald-50 rounded border border-emerald-300 text-[11px] font-bold text-[#10b981] flex items-center gap-2 uppercase tracking-wider">
+            <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
+            <span>EVENT INJECTED: <strong>{lastTriggered}</strong></span>
           </div>
         )}
       </div>
 
       {/* Camera Target Selector */}
-      <div className="flex items-center gap-3 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs">
-        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Target Camera Stream:</span>
+      <div className="tactical-card p-3 flex items-center gap-3">
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-600">TARGET CAMERA NODE:</span>
         <select
           value={selectedCamId}
           onChange={(e) => setSelectedCamId(Number(e.target.value))}
-          className="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white text-xs rounded-lg px-3 py-1.5 font-medium cursor-pointer"
+          className="bg-slate-50 border border-slate-300 text-slate-900 text-xs rounded px-3 py-1.5 font-mono font-bold focus:outline-none focus:border-[#00a896] cursor-pointer"
         >
           {cameras.map((c) => (
             <option key={c.id} value={c.id}>
-              {c.name} ({c.location || 'Gate'})
+              {c.name.toUpperCase()} ({c.location ? c.location.toUpperCase() : 'GATE'})
             </option>
           ))}
         </select>
       </div>
 
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {presets.map((p) => {
           const Icon = p.icon;
           return (
-            <div key={p.id} className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 space-y-4 flex flex-col justify-between shadow-xs">
+            <div key={p.id} className="tactical-card p-4 space-y-4 flex flex-col justify-between">
               <div className="space-y-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300">
-                    <Icon className="w-5 h-5" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded bg-slate-100 border border-slate-300 flex items-center justify-center text-slate-700">
+                    <Icon className="w-4 h-4" />
                   </div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white">{p.title}</h3>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">{p.title}</h3>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{p.description}</p>
+                <p className="text-[11px] text-slate-500 font-mono leading-relaxed">{p.description}</p>
               </div>
 
               <button
                 onClick={() => handleTrigger(p)}
-                className={`w-full py-2.5 rounded-xl font-semibold text-xs text-white flex items-center justify-center gap-2 cursor-pointer shadow-xs ${p.color}`}
+                className={`w-full py-2 rounded font-bold text-xs uppercase tracking-wider text-white flex items-center justify-center gap-2 cursor-pointer transition-colors ${
+                  p.id === 'INTRUSION' ? 'bg-[#e11d48] hover:bg-[#be123c]' :
+                  p.id === 'ANPR_MATCH' ? 'bg-[#00a896] hover:bg-[#009282]' :
+                  p.id === 'OBJECT_DETECTED' ? 'bg-[#f59e0b] hover:bg-[#d97706]' :
+                  'bg-slate-800 hover:bg-slate-900'
+                }`}
               >
                 <Zap className="w-4 h-4 fill-current" />
-                Trigger {p.title}
+                TRIGGER {p.id} DRILL
               </button>
             </div>
           );

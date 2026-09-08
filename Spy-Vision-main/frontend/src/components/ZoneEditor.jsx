@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Layers, Plus, Trash2, CheckCircle, Sliders, AlertTriangle, MousePointer, Save } from 'lucide-react';
+import { Layers, Plus, Trash2, MousePointer, Save } from 'lucide-react';
 
 export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDeleteZone, existingZones }) {
   const [activeCamId, setActiveCamId] = useState(selectedCameraId || (cameras[0]?.id || 1));
   const [points, setPoints] = useState([]);
-  const [zoneName, setZoneName] = useState('Intrusion Zone Sector A');
+  const [zoneName, setZoneName] = useState('INTRUSION_ZONE_SECTOR_07W');
   const [zoneType, setZoneType] = useState('INTRUSION_ZONE');
   const [sensitivity, setSensitivity] = useState(0.85);
-  const [isDrawing, setIsDrawing] = useState(false);
   const canvasRef = useRef(null);
 
   const activeCamera = cameras.find(c => c.id === activeCamId) || cameras[0];
 
-  // Canvas drawing logic
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -31,15 +29,15 @@ export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDe
           ctx.lineTo(pt[0] * canvas.width, pt[1] * canvas.height);
         }
         ctx.closePath();
-        ctx.fillStyle = 'rgba(59, 130, 246, 0.2)';
+        ctx.fillStyle = 'rgba(6, 182, 212, 0.2)';
         ctx.fill();
-        ctx.strokeStyle = '#3b82f6';
+        ctx.strokeStyle = '#06b6d4';
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        ctx.fillStyle = '#3b82f6';
-        ctx.font = '500 11px Inter, sans-serif';
-        ctx.fillText(z.name, z.coordinates[0][0] * canvas.width + 5, z.coordinates[0][1] * canvas.height + 15);
+        ctx.fillStyle = '#06b6d4';
+        ctx.font = 'bold 11px JetBrains Mono, monospace';
+        ctx.fillText(`[SAVED] ${z.name}`, z.coordinates[0][0] * canvas.width + 5, z.coordinates[0][1] * canvas.height + 15);
       });
     }
 
@@ -53,12 +51,12 @@ export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDe
 
       if (points.length >= 3) {
         ctx.closePath();
-        ctx.fillStyle = 'rgba(239, 68, 68, 0.2)';
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.25)';
         ctx.fill();
       }
 
       ctx.strokeStyle = '#ef4444';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2.5;
       ctx.setLineDash([4, 4]);
       ctx.stroke();
       ctx.setLineDash([]);
@@ -66,7 +64,7 @@ export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDe
       points.forEach((pt, i) => {
         ctx.beginPath();
         ctx.arc(pt.x, pt.y, 5, 0, Math.PI * 2);
-        ctx.fillStyle = i === 0 ? '#3b82f6' : '#ef4444';
+        ctx.fillStyle = i === 0 ? '#06b6d4' : '#ef4444';
         ctx.fill();
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = 1.5;
@@ -83,17 +81,15 @@ export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDe
     const y = e.clientY - rect.top;
 
     setPoints([...points, { x, y }]);
-    setIsDrawing(true);
   };
 
   const handleClearPoints = () => {
     setPoints([]);
-    setIsDrawing(false);
   };
 
   const handleSave = () => {
     if (points.length < 3) {
-      alert('Please click at least 3 points on the stream to create a zone.');
+      alert('Please click at least 3 points on the feed to define perimeter boundary.');
       return;
     }
 
@@ -114,185 +110,175 @@ export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDe
 
     onSaveZone(zoneData);
     setPoints([]);
-    setIsDrawing(false);
   };
 
   return (
-    <div className="p-4 md:p-6 space-y-6 max-w-[1920px] mx-auto font-sans">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs">
-        <div>
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Layers className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            Virtual Fence & Zone Configuration
-          </h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            Click directly on the camera view to draw virtual boundary lines and detection areas.
-          </p>
-        </div>
+    <div className="p-3 font-mono bg-[#f1f5f9] text-slate-900 min-h-screen">
+      <div className="max-w-[1920px] mx-auto space-y-3">
+        {/* Header */}
+        <div className="tactical-card p-3 rounded-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-sm font-bold tracking-wider text-slate-900 uppercase flex items-center gap-2">
+              <Layers className="w-4 h-4 text-cyan-600" />
+              VIRTUAL FENCE & PERIMETER POLYGON CONFIGURATOR
+            </h2>
+            <p className="text-[10px] text-slate-500 font-bold uppercase">
+              // INTERACTIVE POLYNOMIAL BOUNDARY CALIBRATION // SECTOR MHA-04
+            </p>
+          </div>
 
-        <div className="flex items-center gap-2">
-          <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">Select Camera:</label>
-          <select
-            value={activeCamId}
-            onChange={(e) => {
-              setActiveCamId(Number(e.target.value));
-              setPoints([]);
-            }}
-            className="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white text-xs rounded-lg px-3 py-1.5 font-medium cursor-pointer"
-          >
-            {cameras.map(c => (
-              <option key={c.id} value={c.id}>
-                {c.name} ({c.location || 'Gate'})
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Drawing Area */}
-        <div className="lg:col-span-2 space-y-3">
-          <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm">
-            {activeCamera?.stream_url ? (
-              <video
-                src={activeCamera.stream_url}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover opacity-90 pointer-events-none"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-slate-500 text-xs font-medium">
-                Stream Offline
-              </div>
-            )}
-
-            <canvas
-              ref={canvasRef}
-              width={800}
-              height={450}
-              onClick={handleCanvasClick}
-              className="absolute inset-0 w-full h-full cursor-crosshair"
-            />
-
-            <div className="absolute top-3 left-3 bg-slate-900/80 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 pointer-events-none">
-              <MousePointer className="w-4 h-4 text-blue-400" />
-              {points.length === 0 
-                ? "Click on camera view to add zone points" 
-                : `Points placed: ${points.length} (Need 3+ for boundary)`}
-            </div>
-
-            {points.length > 0 && (
-              <button
-                onClick={handleClearPoints}
-                className="absolute top-3 right-3 px-3 py-1 bg-rose-600 text-white text-xs font-medium rounded-lg hover:bg-rose-500 cursor-pointer"
-              >
-                Clear Points
-              </button>
-            )}
+          <div className="flex items-center gap-2 text-xs">
+            <span className="text-[10px] font-bold text-slate-600">SELECT STREAM:</span>
+            <select
+              value={activeCamId}
+              onChange={(e) => {
+                setActiveCamId(Number(e.target.value));
+                setPoints([]);
+              }}
+              className="bg-slate-50 border border-slate-300 text-cyan-700 text-xs rounded px-3 py-1.5 font-bold focus:outline-none focus:border-cyan-500 cursor-pointer"
+            >
+              {cameras.map(c => (
+                <option key={c.id} value={c.id}>
+                  {c.name} ({c.location || 'SECTOR'})
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
-        {/* Sidebar Form & List */}
-        <div className="space-y-4">
-          <div className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 space-y-4 shadow-xs">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-2">
-              <Plus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-              Add Virtual Zone
-            </h3>
-
-            <div className="space-y-3 text-xs">
-              <div>
-                <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">Zone Name</label>
-                <input
-                  type="text"
-                  value={zoneName}
-                  onChange={(e) => setZoneName(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-slate-900 dark:text-white font-medium"
-                  placeholder="e.g. Sector A Perimeter"
+        {/* Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+          {/* Stream Canvas */}
+          <div className="lg:col-span-2 space-y-2">
+            <div className="relative aspect-video rounded border-2 border-slate-800 bg-slate-950 overflow-hidden">
+              {activeCamera?.stream_url ? (
+                <video
+                  src={activeCamera.stream_url}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover opacity-80"
                 />
-              </div>
-
-              <div>
-                <label className="block text-slate-600 dark:text-slate-400 font-medium mb-1">Zone Type</label>
-                <select
-                  value={zoneType}
-                  onChange={(e) => setZoneType(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-slate-900 dark:text-white font-medium cursor-pointer"
-                >
-                  <option value="INTRUSION_ZONE">Intrusion Zone (Boundary Breach)</option>
-                  <option value="RESTRICTED_AREA">Restricted Area (No Access)</option>
-                  <option value="FENCE_LINE">Fence Approach Line</option>
-                </select>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between text-slate-600 dark:text-slate-400 mb-1 font-medium">
-                  <span>Sensitivity Threshold:</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold">{(sensitivity * 100).toFixed(0)}%</span>
-                </div>
-                <input
-                  type="range"
-                  min="0.5"
-                  max="0.99"
-                  step="0.05"
-                  value={sensitivity}
-                  onChange={(e) => setSensitivity(e.target.value)}
-                  className="w-full accent-blue-600 cursor-pointer"
-                />
-              </div>
-
-              <button
-                onClick={handleSave}
-                disabled={points.length < 3}
-                className={`w-full py-2.5 rounded-lg font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer transition-all ${
-                  points.length >= 3
-                    ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-xs'
-                    : 'bg-slate-100 dark:bg-slate-700 text-slate-400 cursor-not-allowed'
-                }`}
-              >
-                <Save className="w-4 h-4" />
-                Save Zone Rule
-              </button>
-            </div>
-          </div>
-
-          {/* Configured Zones */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 space-y-3 shadow-xs">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2">
-              Configured Zones ({existingZones?.length || 0})
-            </h3>
-
-            <div className="space-y-2 max-h-52 overflow-y-auto">
-              {!existingZones || existingZones.length === 0 ? (
-                <div className="text-center py-6 text-slate-400 text-xs">
-                  No active virtual zones for this camera stream.
-                </div>
               ) : (
-                existingZones.map((z) => (
-                  <div
-                    key={z.id}
-                    className="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600 flex items-center justify-between text-xs"
-                  >
-                    <div>
-                      <h4 className="font-semibold text-slate-900 dark:text-white">{z.name}</h4>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                        {z.zone_type} • Sens: {((z.sensitivity || 0.8) * 100).toFixed(0)}%
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => onDeleteZone(z.id)}
-                      className="p-1.5 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded cursor-pointer"
-                      title="Delete Zone"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                ))
+                <div className="w-full h-full flex items-center justify-center text-slate-500 text-xs font-bold">
+                  STREAM OFFLINE
+                </div>
               )}
+
+              <canvas
+                ref={canvasRef}
+                width={800}
+                height={450}
+                onClick={handleCanvasClick}
+                className="absolute inset-0 w-full h-full cursor-crosshair"
+              />
+
+              <div className="absolute top-3 left-3 bg-black/90 text-cyan-300 font-mono text-[10px] px-3 py-1 rounded border border-cyan-500/40 flex items-center gap-2">
+                <MousePointer className="w-3.5 h-3.5 text-cyan-400" />
+                {points.length === 0 
+                  ? "Click feed to add boundary vertices" 
+                  : `Vertices: ${points.length} (Need 3+ for boundary)`}
+              </div>
+
+              {points.length > 0 && (
+                <button
+                  onClick={handleClearPoints}
+                  className="absolute top-3 right-3 px-2.5 py-1 bg-rose-600 text-white text-[10px] font-bold rounded cursor-pointer"
+                >
+                  CLEAR DRAW
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Settings Sidebar */}
+          <div className="space-y-3">
+            <div className="tactical-card p-4 rounded-md space-y-3">
+              <h3 className="text-xs font-bold text-slate-900 uppercase border-b border-slate-200 pb-2 flex items-center gap-2">
+                <Plus className="w-4 h-4 text-cyan-600" />
+                DEFINE PERIMETER RULE
+              </h3>
+
+              <div className="space-y-3 text-xs">
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 mb-1">RULE ID / ZONE NAME</label>
+                  <input
+                    type="text"
+                    value={zoneName}
+                    onChange={(e) => setZoneName(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900 font-mono font-bold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 mb-1">DETECTION EVENT TYPE</label>
+                  <select
+                    value={zoneType}
+                    onChange={(e) => setZoneType(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-cyan-800 font-mono font-bold cursor-pointer"
+                  >
+                    <option value="INTRUSION_ZONE">INTRUSION_ZONE (Border Breach)</option>
+                    <option value="RESTRICTED_AREA">RESTRICTED_AREA (No Access)</option>
+                    <option value="FENCE_LINE">FENCE_LINE (Approach Warning)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between text-[10px] font-bold text-slate-600 mb-1">
+                    <span>SENSITIVITY THRESHOLD:</span>
+                    <span className="text-cyan-700">{(sensitivity * 100).toFixed(0)}%</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0.5"
+                    max="0.99"
+                    step="0.05"
+                    value={sensitivity}
+                    onChange={(e) => setSensitivity(e.target.value)}
+                    className="w-full accent-cyan-600 cursor-pointer"
+                  />
+                </div>
+
+                <button
+                  onClick={handleSave}
+                  disabled={points.length < 3}
+                  className={`w-full py-2.5 rounded font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer ${
+                    points.length >= 3
+                      ? 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-xs'
+                      : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                  }`}
+                >
+                  <Save className="w-4 h-4" />
+                  SAVE PERIMETER RULE
+                </button>
+              </div>
+            </div>
+
+            {/* Saved List */}
+            <div className="tactical-card p-3 rounded-md space-y-2">
+              <h4 className="text-xs font-bold text-slate-900 uppercase border-b border-slate-200 pb-1">
+                CONFIGURED ZONES ({existingZones?.length || 0})
+              </h4>
+              <div className="space-y-1.5 max-h-52 overflow-y-auto pr-1">
+                {!existingZones || existingZones.length === 0 ? (
+                  <div className="text-center py-4 text-slate-400 text-[10px]">
+                    NO ACTIVE ZONES ON THIS STREAM
+                  </div>
+                ) : (
+                  existingZones.map((z) => (
+                    <div key={z.id} className="p-2 bg-slate-50 rounded border border-slate-200 flex items-center justify-between text-[10px]">
+                      <div>
+                        <p className="font-bold text-cyan-800">{z.name}</p>
+                        <p className="text-[9px] text-slate-500">{z.zone_type} | {((z.sensitivity || 0.8) * 100).toFixed(0)}% SENS</p>
+                      </div>
+                      <button onClick={() => onDeleteZone(z.id)} className="text-rose-600 hover:bg-rose-50 p-1 rounded cursor-pointer">
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </div>
