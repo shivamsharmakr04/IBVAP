@@ -81,45 +81,42 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
   };
 
   return (
-    <div className="p-4 md:p-6 space-y-6 max-w-[1920px] mx-auto font-mono text-slate-900 select-none">
+    <div className="p-4 md:p-6 space-y-6 max-w-[1920px] mx-auto font-sans text-slate-900 select-none">
       {/* Header */}
-      <div className="tactical-card p-4 space-y-3">
+      <div className="light-card p-5 space-y-3">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded bg-slate-100 border border-slate-300 flex items-center justify-center text-[#00a896]">
+          <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
             <Sparkles className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#00a896] animate-pulse" />
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900">
-                AI DETECTION INTRUSION SIMULATOR // DRILL CONTROLLER
-              </h2>
-            </div>
-            <p className="text-[11px] text-slate-500 font-mono mt-0.5">
-              Trigger synthetic surveillance alert events to test real-time perimeter feeds and lockouts.
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              AI Intrusion Alert Simulator
+            </h2>
+            <p className="text-xs text-slate-500 font-medium mt-0.5">
+              Inject synthetic surveillance alert events to test real-time notification feeds and response protocols.
             </p>
           </div>
         </div>
 
         {lastTriggered && (
-          <div className="p-2.5 bg-emerald-50 rounded border border-emerald-300 text-[11px] font-bold text-[#10b981] flex items-center gap-2 uppercase tracking-wider">
-            <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
-            <span>EVENT INJECTED: <strong>{lastTriggered}</strong></span>
+          <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs font-semibold text-emerald-700 flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <span>Simulated Event Triggered: <strong>{lastTriggered}</strong></span>
           </div>
         )}
       </div>
 
       {/* Camera Target Selector */}
-      <div className="tactical-card p-3 flex items-center gap-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-600">TARGET CAMERA NODE:</span>
+      <div className="light-card p-4 flex items-center gap-3 text-xs">
+        <span className="font-semibold text-slate-700">Target Camera Node:</span>
         <select
           value={selectedCamId}
           onChange={(e) => setSelectedCamId(Number(e.target.value))}
-          className="bg-slate-50 border border-slate-300 text-slate-900 text-xs rounded px-3 py-1.5 font-mono font-bold focus:outline-none focus:border-[#00a896] cursor-pointer"
+          className="bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-xl px-3.5 py-2 font-bold focus:outline-none focus:border-blue-500 cursor-pointer"
         >
           {cameras.map((c) => (
             <option key={c.id} value={c.id}>
-              {c.name.toUpperCase()} ({c.location ? c.location.toUpperCase() : 'GATE'})
+              {c.name} ({c.location || 'Gate'})
             </option>
           ))}
         </select>
@@ -130,28 +127,23 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
         {presets.map((p) => {
           const Icon = p.icon;
           return (
-            <div key={p.id} className="tactical-card p-4 space-y-4 flex flex-col justify-between">
+            <div key={p.id} className="light-card p-5 space-y-4 flex flex-col justify-between">
               <div className="space-y-2">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded bg-slate-100 border border-slate-300 flex items-center justify-center text-slate-700">
-                    <Icon className="w-4 h-4" />
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-700">
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">{p.title}</h3>
+                  <h3 className="text-sm font-bold text-slate-900">{p.title}</h3>
                 </div>
-                <p className="text-[11px] text-slate-500 font-mono leading-relaxed">{p.description}</p>
+                <p className="text-xs text-slate-500 leading-relaxed font-medium">{p.description}</p>
               </div>
 
               <button
                 onClick={() => handleTrigger(p)}
-                className={`w-full py-2 rounded font-bold text-xs uppercase tracking-wider text-white flex items-center justify-center gap-2 cursor-pointer transition-colors ${
-                  p.id === 'INTRUSION' ? 'bg-[#e11d48] hover:bg-[#be123c]' :
-                  p.id === 'ANPR_MATCH' ? 'bg-[#00a896] hover:bg-[#009282]' :
-                  p.id === 'OBJECT_DETECTED' ? 'bg-[#f59e0b] hover:bg-[#d97706]' :
-                  'bg-slate-800 hover:bg-slate-900'
-                }`}
+                className={`w-full py-2.5 rounded-xl font-bold text-xs text-white flex items-center justify-center gap-2 cursor-pointer shadow-xs transition-all ${p.color}`}
               >
                 <Zap className="w-4 h-4 fill-current" />
-                TRIGGER {p.id} DRILL
+                Trigger {p.title}
               </button>
             </div>
           );

@@ -113,33 +113,33 @@ export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDe
   };
 
   return (
-    <div className="p-3 font-mono bg-[#f1f5f9] text-slate-900 min-h-screen">
-      <div className="max-w-[1920px] mx-auto space-y-3">
+    <div className="p-4 md:p-6 font-sans bg-[#f8fafc] text-slate-900 min-h-screen">
+      <div className="max-w-[1920px] mx-auto space-y-4">
         {/* Header */}
-        <div className="tactical-card p-3 rounded-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="light-card p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-sm font-bold tracking-wider text-slate-900 uppercase flex items-center gap-2">
-              <Layers className="w-4 h-4 text-cyan-600" />
-              VIRTUAL FENCE & PERIMETER POLYGON CONFIGURATOR
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <Layers className="w-5 h-5 text-blue-600" />
+              Detection Zone Configurator
             </h2>
-            <p className="text-[10px] text-slate-500 font-bold uppercase">
-              // INTERACTIVE POLYNOMIAL BOUNDARY CALIBRATION // SECTOR MHA-04
+            <p className="text-xs text-slate-500 font-medium mt-0.5">
+              Draw virtual fence boundaries and security polygons directly over live camera streams.
             </p>
           </div>
 
           <div className="flex items-center gap-2 text-xs">
-            <span className="text-[10px] font-bold text-slate-600">SELECT STREAM:</span>
+            <span className="text-xs font-semibold text-slate-600">Select Stream:</span>
             <select
               value={activeCamId}
               onChange={(e) => {
                 setActiveCamId(Number(e.target.value));
                 setPoints([]);
               }}
-              className="bg-slate-50 border border-slate-300 text-cyan-700 text-xs rounded px-3 py-1.5 font-bold focus:outline-none focus:border-cyan-500 cursor-pointer"
+              className="bg-slate-50 border border-slate-200 text-slate-900 text-xs rounded-xl px-3 py-2 font-bold focus:outline-none focus:border-blue-500 cursor-pointer"
             >
               {cameras.map(c => (
                 <option key={c.id} value={c.id}>
-                  {c.name} ({c.location || 'SECTOR'})
+                  {c.name} ({c.location || 'Sector'})
                 </option>
               ))}
             </select>
@@ -147,10 +147,10 @@ export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDe
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {/* Stream Canvas */}
           <div className="lg:col-span-2 space-y-2">
-            <div className="relative aspect-video rounded border-2 border-slate-800 bg-slate-950 overflow-hidden">
+            <div className="relative aspect-video rounded-2xl border border-slate-300 bg-slate-900 overflow-hidden shadow-sm">
               {activeCamera?.stream_url ? (
                 <video
                   src={activeCamera.stream_url}
@@ -161,8 +161,8 @@ export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDe
                   className="w-full h-full object-cover opacity-80"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-slate-500 text-xs font-bold">
-                  STREAM OFFLINE
+                <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs font-semibold">
+                  Stream Feed Offline
                 </div>
               )}
 
@@ -174,60 +174,60 @@ export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDe
                 className="absolute inset-0 w-full h-full cursor-crosshair"
               />
 
-              <div className="absolute top-3 left-3 bg-black/90 text-cyan-300 font-mono text-[10px] px-3 py-1 rounded border border-cyan-500/40 flex items-center gap-2">
-                <MousePointer className="w-3.5 h-3.5 text-cyan-400" />
+              <div className="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-xs text-white font-sans text-xs px-3.5 py-1.5 rounded-xl border border-slate-700 flex items-center gap-2">
+                <MousePointer className="w-4 h-4 text-blue-400" />
                 {points.length === 0 
-                  ? "Click feed to add boundary vertices" 
-                  : `Vertices: ${points.length} (Need 3+ for boundary)`}
+                  ? "Click feed to set boundary vertices" 
+                  : `Points: ${points.length} (Need 3+ to enclose zone)`}
               </div>
 
               {points.length > 0 && (
                 <button
                   onClick={handleClearPoints}
-                  className="absolute top-3 right-3 px-2.5 py-1 bg-rose-600 text-white text-[10px] font-bold rounded cursor-pointer"
+                  className="absolute top-4 right-4 px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition-colors"
                 >
-                  CLEAR DRAW
+                  Clear Points
                 </button>
               )}
             </div>
           </div>
 
           {/* Settings Sidebar */}
-          <div className="space-y-3">
-            <div className="tactical-card p-4 rounded-md space-y-3">
-              <h3 className="text-xs font-bold text-slate-900 uppercase border-b border-slate-200 pb-2 flex items-center gap-2">
-                <Plus className="w-4 h-4 text-cyan-600" />
-                DEFINE PERIMETER RULE
+          <div className="space-y-4">
+            <div className="light-card p-5 space-y-4">
+              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2.5 flex items-center gap-2">
+                <Plus className="w-4 h-4 text-blue-600" />
+                Define Zone Rules
               </h3>
 
-              <div className="space-y-3 text-xs">
+              <div className="space-y-3.5 text-xs font-medium">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-500 mb-1">RULE ID / ZONE NAME</label>
+                  <label className="block text-xs font-medium text-slate-500 mb-1">Zone Identifier / Name</label>
                   <input
                     type="text"
                     value={zoneName}
                     onChange={(e) => setZoneName(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900 font-mono font-bold"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 font-bold focus:outline-none focus:border-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-500 mb-1">DETECTION EVENT TYPE</label>
+                  <label className="block text-xs font-medium text-slate-500 mb-1">Detection Zone Type</label>
                   <select
                     value={zoneType}
                     onChange={(e) => setZoneType(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-cyan-800 font-mono font-bold cursor-pointer"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 font-semibold focus:outline-none focus:border-blue-500 cursor-pointer"
                   >
-                    <option value="INTRUSION_ZONE">INTRUSION_ZONE (Border Breach)</option>
-                    <option value="RESTRICTED_AREA">RESTRICTED_AREA (No Access)</option>
-                    <option value="FENCE_LINE">FENCE_LINE (Approach Warning)</option>
+                    <option value="INTRUSION_ZONE">Intrusion Zone (Perimeter Breach)</option>
+                    <option value="RESTRICTED_AREA">Restricted Area (No Access)</option>
+                    <option value="FENCE_LINE">Fence Line (Approach Warning)</option>
                   </select>
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between text-[10px] font-bold text-slate-600 mb-1">
-                    <span>SENSITIVITY THRESHOLD:</span>
-                    <span className="text-cyan-700">{(sensitivity * 100).toFixed(0)}%</span>
+                  <div className="flex items-center justify-between text-xs text-slate-600 mb-1">
+                    <span>Sensitivity Threshold:</span>
+                    <span className="text-blue-600 font-bold">{(sensitivity * 100).toFixed(0)}%</span>
                   </div>
                   <input
                     type="range"
@@ -236,44 +236,44 @@ export default function ZoneEditor({ cameras, selectedCameraId, onSaveZone, onDe
                     step="0.05"
                     value={sensitivity}
                     onChange={(e) => setSensitivity(e.target.value)}
-                    className="w-full accent-cyan-600 cursor-pointer"
+                    className="w-full accent-blue-600 cursor-pointer"
                   />
                 </div>
 
                 <button
                   onClick={handleSave}
                   disabled={points.length < 3}
-                  className={`w-full py-2.5 rounded font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer ${
+                  className={`w-full py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 cursor-pointer transition-colors ${
                     points.length >= 3
-                      ? 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-xs'
-                      : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                      ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-400 cursor-not-allowed'
                   }`}
                 >
                   <Save className="w-4 h-4" />
-                  SAVE PERIMETER RULE
+                  Save Detection Zone
                 </button>
               </div>
             </div>
 
             {/* Saved List */}
-            <div className="tactical-card p-3 rounded-md space-y-2">
-              <h4 className="text-xs font-bold text-slate-900 uppercase border-b border-slate-200 pb-1">
-                CONFIGURED ZONES ({existingZones?.length || 0})
+            <div className="light-card p-4 space-y-3">
+              <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
+                Active Zones ({existingZones?.length || 0})
               </h4>
-              <div className="space-y-1.5 max-h-52 overflow-y-auto pr-1">
+              <div className="space-y-2 max-h-52 overflow-y-auto pr-1">
                 {!existingZones || existingZones.length === 0 ? (
-                  <div className="text-center py-4 text-slate-400 text-[10px]">
-                    NO ACTIVE ZONES ON THIS STREAM
+                  <div className="text-center py-4 text-slate-400 text-xs">
+                    No active zones configured on this feed.
                   </div>
                 ) : (
                   existingZones.map((z) => (
-                    <div key={z.id} className="p-2 bg-slate-50 rounded border border-slate-200 flex items-center justify-between text-[10px]">
+                    <div key={z.id} className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
                       <div>
-                        <p className="font-bold text-cyan-800">{z.name}</p>
-                        <p className="text-[9px] text-slate-500">{z.zone_type} | {((z.sensitivity || 0.8) * 100).toFixed(0)}% SENS</p>
+                        <p className="font-bold text-slate-900">{z.name}</p>
+                        <p className="text-[11px] text-slate-500">{z.zone_type} • {((z.sensitivity || 0.8) * 100).toFixed(0)}% Sens</p>
                       </div>
-                      <button onClick={() => onDeleteZone(z.id)} className="text-rose-600 hover:bg-rose-50 p-1 rounded cursor-pointer">
-                        <Trash2 className="w-3.5 h-3.5" />
+                      <button onClick={() => onDeleteZone(z.id)} className="text-slate-400 hover:text-rose-600 p-1 rounded-lg cursor-pointer">
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   ))

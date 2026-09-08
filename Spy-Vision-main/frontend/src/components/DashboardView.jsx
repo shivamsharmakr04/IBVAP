@@ -55,443 +55,400 @@ export default function DashboardView({
   const activeAlerts = alerts.filter(a => a.status === 'ACTIVE');
 
   return (
-    <div className="p-3 font-mono bg-[#f1f5f9] text-slate-900 min-h-screen">
-      <div className="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-3">
+    <div className="p-4 md:p-6 font-sans bg-[#f8fafc] text-slate-900 min-h-screen">
+      <div className="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5">
         
         {/* ========================================================================= */}
-        {/* LEFT COLUMN: TACTICAL SECTORS & AI PIPELINES (3 Cols) */}
+        {/* LEFT COLUMN: SECTOR PANELS & AI PIPELINES (3 Cols) */}
         {/* ========================================================================= */}
-        <div className="lg:col-span-2 space-y-3">
-          {/* Sector Status List */}
-          <div className="tactical-card p-3 rounded-md space-y-2">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-300">
-              <span className="text-[11px] font-bold text-slate-700 uppercase flex items-center gap-1.5">
-                <Radio className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
-                TACTICAL SECTORS
+        <div className="lg:col-span-3 space-y-4">
+          {/* Sector Overview List */}
+          <div className="light-card p-5 space-y-3">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <span className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                <Radio className="w-4 h-4 text-emerald-500 animate-pulse" />
+                Sector Overview
               </span>
-              <span className="text-[10px] text-emerald-600 font-bold">ONLINE</span>
+              <span className="text-xs text-emerald-600 font-bold px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200">Online</span>
             </div>
 
-            <div className="space-y-1.5 text-[10px] font-bold">
-              <div className="p-2 bg-slate-50 rounded border border-slate-200 flex items-center justify-between">
+            <div className="space-y-2 text-xs">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/70 flex items-center justify-between hover:bg-slate-100/60 transition-colors">
                 <div>
-                  <p className="text-slate-800">SECTOR 4A - NORTH GATE</p>
+                  <p className="font-semibold text-slate-900">Sector 4A - North Gate</p>
+                  <p className="text-[11px] text-slate-500">Main Entry Checkpoint</p>
                 </div>
-                <span className="text-emerald-600">4 CAMS</span>
+                <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">4 Cams</span>
               </div>
 
-              <div className="p-2 bg-rose-50 rounded border border-rose-200 flex items-center justify-between text-rose-700">
+              <div className="p-3 bg-rose-50/60 rounded-xl border border-rose-200 flex items-center justify-between text-rose-800">
                 <div>
-                  <p className="font-bold">SECTOR 4B - PERIMETER WEST</p>
+                  <p className="font-bold">Sector 4B - West Perimeter</p>
+                  <p className="text-[11px] text-rose-600">Virtual Fence Breach</p>
                 </div>
-                <span className="text-rose-600 font-extrabold">3 CAMS</span>
+                <span className="text-xs font-bold text-white bg-rose-600 px-2.5 py-1 rounded-lg shadow-xs">3 Cams</span>
               </div>
 
-              <div className="p-2 bg-slate-50 rounded border border-slate-200 flex items-center justify-between">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/70 flex items-center justify-between hover:bg-slate-100/60 transition-colors">
                 <div>
-                  <p className="text-slate-800">SECTOR 4C - BUFFER ZONE</p>
+                  <p className="font-semibold text-slate-900">Sector 4C - Buffer Zone</p>
+                  <p className="text-[11px] text-slate-500">Secondary Security Belt</p>
                 </div>
-                <span className="text-amber-600">3 CAMS</span>
+                <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-lg">3 Cams</span>
               </div>
 
-              <div className="p-2 bg-slate-50 rounded border border-slate-200 flex items-center justify-between">
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-200/70 flex items-center justify-between hover:bg-slate-100/60 transition-colors">
                 <div>
-                  <p className="text-slate-800">SECTOR 4D - SATELLITE RADAR</p>
+                  <p className="font-semibold text-slate-900">Sector 4D - Radar Outpost</p>
+                  <p className="text-[11px] text-slate-500">Long Range Telemetry</p>
                 </div>
-                <span className="text-emerald-600">2 CAMS</span>
+                <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">2 Cams</span>
               </div>
             </div>
           </div>
 
           {/* AI Model Pipelines */}
-          <div className="tactical-card p-3 rounded-md space-y-2">
-            <div className="pb-1 border-b border-slate-300">
-              <span className="text-[10px] font-bold text-slate-600 uppercase">AI MODEL PIPELINES</span>
+          <div className="light-card p-5 space-y-3">
+            <div className="pb-2 border-b border-slate-100 flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-blue-600" />
+                AI Model Models
+              </span>
+              <span className="text-xs text-slate-400 font-medium">v4.2 Active</span>
             </div>
 
-            <div className="space-y-1.5 text-[10px] font-bold">
+            <div className="space-y-2.5 text-xs font-medium">
               <div className="flex items-center justify-between text-slate-700">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  YOLOv9-BORDER-DET
+                <span className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  YOLOv9 Target Detector
                 </span>
-                <span className="text-slate-500 font-mono">99.4%</span>
+                <span className="font-mono text-xs font-bold text-slate-900">99.4%</span>
               </div>
 
               <div className="flex items-center justify-between text-slate-700">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  DEEP-STRESS-VOX
+                <span className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  Deep-Stress Biometric AI
                 </span>
-                <span className="text-slate-500 font-mono">98.1%</span>
+                <span className="font-mono text-xs font-bold text-slate-900">98.1%</span>
               </div>
 
               <div className="flex items-center justify-between text-slate-700">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  ANPR-IND-OCR-V4
+                <span className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  ANPR License Plate OCR
                 </span>
-                <span className="text-slate-500 font-mono">99.8%</span>
+                <span className="font-mono text-xs font-bold text-slate-900">99.8%</span>
               </div>
             </div>
           </div>
 
           {/* Hardware Compute Node Status */}
-          <div className="tactical-card p-3 rounded-md space-y-2 text-[10px] bg-slate-50">
-            <div className="flex items-center justify-between text-slate-600 border-b border-slate-200 pb-1 font-bold">
-              <span>HARDWARE COMPUTE</span>
-              <span className="text-cyan-700">4x A100 GPU</span>
+          <div className="light-card p-4 space-y-2 bg-slate-50/80">
+            <div className="flex items-center justify-between text-xs text-slate-700 border-b border-slate-200/60 pb-1.5 font-bold">
+              <span className="flex items-center gap-1.5">
+                <Activity className="w-4 h-4 text-blue-600" />
+                Hardware Node
+              </span>
+              <span className="text-blue-600">4x NVIDIA A100</span>
             </div>
-            <div className="flex items-center justify-between text-slate-500">
-              <span>VRAM: 48GB / 88GB</span>
-              <span>FPS: 144Hz</span>
+            <div className="flex items-center justify-between text-xs text-slate-500">
+              <span>VRAM Usage: 48 GB / 88 GB</span>
+              <span className="font-mono text-slate-700 font-bold">144 FPS</span>
             </div>
           </div>
         </div>
 
         {/* ========================================================================= */}
-        {/* CENTER COLUMN: METRICS + STREAMS + TOOLBAR (7 Cols) */}
+        {/* CENTER COLUMN: METRICS + STREAMS + TOOLBAR (6 Cols) */}
         {/* ========================================================================= */}
-        <div className="lg:col-span-7 space-y-3">
+        <div className="lg:col-span-6 space-y-4">
           
           {/* Top 4 Metrics Row */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             
             {/* Card 1: Targets Tracked */}
-            <div className="tactical-card p-3 rounded-md space-y-1.5">
-              <div className="flex items-center justify-between text-[10px] font-bold text-slate-500 uppercase">
-                <span>TOTAL TARGETS TRACKED</span>
-                <span className="px-1.5 py-0.5 rounded bg-cyan-100 text-cyan-800 border border-cyan-300 font-mono text-[9px]">BYTETRACK</span>
+            <div className="light-card p-4 space-y-1.5">
+              <div className="flex items-center justify-between text-xs font-bold text-slate-500">
+                <span>Targets Tracked</span>
+                <span className="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-semibold text-[10px]">Active</span>
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-extrabold text-slate-900 font-mono tracking-tight">142</span>
-                <span className="text-[10px] text-emerald-600 font-bold">↑+18/min</span>
+                <span className="text-2xl font-extrabold text-slate-900 font-sans">142</span>
+                <span className="text-xs text-emerald-600 font-bold">↑ +18/m</span>
               </div>
-              <div className="flex items-center justify-between text-[9px] text-slate-500 font-bold border-t border-slate-200 pt-1">
-                <span>VECTORS: 88 PEDESTRIAN</span>
-                <span>54 VEHICULAR</span>
-              </div>
+              <p className="text-[11px] text-slate-500 font-medium">88 Pedestrian • 54 Vehicles</p>
             </div>
 
             {/* Card 2: Perimeter Breach Status */}
-            <div className="tactical-card p-3 rounded-md space-y-1.5 border-rose-300 bg-rose-50/40">
-              <div className="flex items-center justify-between text-[10px] font-bold text-rose-700 uppercase">
-                <span>PERIMETER STATUS</span>
-                <span className="px-1.5 py-0.5 rounded bg-rose-600 text-white font-mono text-[9px] font-bold animate-pulse">BREACH ACTIVE</span>
+            <div className="light-card p-4 space-y-1.5 border-rose-200 bg-rose-50/30">
+              <div className="flex items-center justify-between text-xs font-bold text-rose-700">
+                <span>Perimeter Status</span>
+                <span className="px-2 py-0.5 rounded-full bg-rose-600 text-white text-[10px] font-bold animate-pulse">Breach</span>
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-extrabold text-rose-600 font-mono tracking-tight">01</span>
-                <div className="text-[9px] text-rose-700 font-bold">
-                  <p>SECTOR 07-W</p>
-                  <p>GRID: 43.19°N</p>
-                </div>
+                <span className="text-2xl font-extrabold text-rose-600 font-sans">01</span>
+                <span className="text-[11px] text-rose-700 font-semibold">Sector 07-West</span>
               </div>
-              <div className="flex items-center justify-between text-[9px] text-rose-600 font-bold border-t border-rose-200 pt-1">
-                <span>VIRTUAL TRIPWIRE OVERRUN</span>
-                <span>12ms</span>
-              </div>
+              <p className="text-[11px] text-rose-600 font-medium">Virtual tripwire hit (12ms)</p>
             </div>
 
             {/* Card 3: ANPR Passes */}
-            <div className="tactical-card p-3 rounded-md space-y-1.5">
-              <div className="flex items-center justify-between text-[10px] font-bold text-slate-500 uppercase">
-                <span>ANPR VEHICLE PASSES</span>
-                <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 font-mono text-[9px]">OCR 99.4%</span>
+            <div className="light-card p-4 space-y-1.5">
+              <div className="flex items-center justify-between text-xs font-bold text-slate-500">
+                <span>Vehicle Passes</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold text-[10px]">99% OCR</span>
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-extrabold text-slate-900 font-mono tracking-tight">1,289</span>
-                <div className="text-[9px] text-slate-500 font-bold">
-                  <p>SHIFT TOTAL</p>
-                  <p className="text-amber-600">1 FLAG WATCHLIST</p>
-                </div>
+                <span className="text-2xl font-extrabold text-slate-900 font-sans">1,289</span>
+                <span className="text-[11px] text-amber-600 font-bold">1 Watchlist</span>
               </div>
-              <div className="flex items-center justify-between text-[9px] text-slate-500 font-bold border-t border-slate-200 pt-1">
-                <span>INBOUND: 742</span>
-                <span>OUTBOUND: 547</span>
-              </div>
+              <p className="text-[11px] text-slate-500 font-medium">742 Inbound • 547 Outbound</p>
             </div>
 
             {/* Card 4: Emotion Anomalies */}
-            <div className="tactical-card p-3 rounded-md space-y-1.5 border-amber-300 bg-amber-50/40">
-              <div className="flex items-center justify-between text-[10px] font-bold text-amber-800 uppercase">
-                <span>EMOTION ANOMALIES</span>
-                <span className="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 font-mono text-[9px]">DEEP-STRESS AI</span>
+            <div className="light-card p-4 space-y-1.5 border-amber-200 bg-amber-50/30">
+              <div className="flex items-center justify-between text-xs font-bold text-amber-800">
+                <span>Anomalies</span>
+                <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold">Biometric</span>
               </div>
-              <div className="flex items-baseline justify-between">
-                <div>
-                  <span className="text-3xl font-extrabold text-amber-700 font-mono tracking-tight">04</span>
-                  <span className="text-[10px] text-amber-700 font-bold ml-1">AGITATED / SUSP</span>
-                </div>
-                <div className="w-6 h-6 rounded bg-amber-200 text-amber-800 flex items-center justify-center">
-                  <HelpCircle className="w-4 h-4" />
-                </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-extrabold text-amber-700 font-sans">04</span>
+                <span className="text-[11px] text-amber-700 font-semibold">Agitated</span>
               </div>
-              <div className="flex items-center justify-between text-[9px] text-amber-800 font-bold border-t border-amber-200 pt-1">
-                <span>MAX GSR COEFF: 0.88</span>
-                <span className="text-rose-600">BOOTH 03 HOLD</span>
-              </div>
+              <p className="text-[11px] text-amber-800 font-medium">Booth 03 Under Inspection</p>
             </div>
 
           </div>
 
           {/* Stream Sub-Toolbar */}
-          <div className="bg-white p-2 rounded-md border border-slate-300 flex flex-wrap items-center justify-between text-[10px] font-bold gap-2">
-            <div className="flex items-center gap-1">
-              <button className="px-2.5 py-1 bg-cyan-600 text-white rounded font-bold border border-cyan-700 cursor-pointer">2x2</button>
-              <button className="px-2.5 py-1 bg-slate-100 text-slate-700 rounded border border-slate-300 hover:bg-slate-200 cursor-pointer">3x3</button>
-              <button className="px-2.5 py-1 bg-slate-100 text-slate-700 rounded border border-slate-300 hover:bg-slate-200 cursor-pointer">1+5 SPOTLIGHT</button>
-              <span className="ml-2 px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded border border-emerald-300">● RTSP EDGE NODES</span>
+          <div className="light-card p-3 flex flex-wrap items-center justify-between text-xs font-medium gap-2">
+            <div className="flex items-center gap-1.5">
+              <button className="px-3 py-1 bg-blue-600 text-white rounded-lg font-bold cursor-pointer shadow-xs">2x2 Grid</button>
+              <button className="px-3 py-1 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 cursor-pointer">3x3 Grid</button>
+              <button className="px-3 py-1 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 cursor-pointer">Spotlight Mode</button>
             </div>
 
             <div className="flex items-center gap-1.5">
               <button 
                 onClick={() => setShowBoundingBoxes(!showBoundingBoxes)}
-                className={`px-2 py-1 rounded border cursor-pointer ${showBoundingBoxes ? 'bg-cyan-50 text-cyan-800 border-cyan-300' : 'bg-slate-100 text-slate-500 border-slate-200'}`}
+                className={`px-2.5 py-1 rounded-lg border text-xs cursor-pointer transition-all ${showBoundingBoxes ? 'bg-blue-50 text-blue-700 border-blue-200 font-bold' : 'bg-slate-50 text-slate-600 border-slate-200'}`}
               >
-                [ ] BOUNDING BOXES
+                Boxes
               </button>
               <button 
                 onClick={() => setShowAnprPlates(!showAnprPlates)}
-                className={`px-2 py-1 rounded border cursor-pointer ${showAnprPlates ? 'bg-emerald-50 text-emerald-800 border-emerald-300' : 'bg-slate-100 text-slate-500 border-slate-200'}`}
+                className={`px-2.5 py-1 rounded-lg border text-xs cursor-pointer transition-all ${showAnprPlates ? 'bg-emerald-50 text-emerald-700 border-emerald-200 font-bold' : 'bg-slate-50 text-slate-600 border-slate-200'}`}
               >
-                🪪 ANPR PLATES
+                Plates
               </button>
               <button 
                 onClick={() => setShowEmotionMeters(!showEmotionMeters)}
-                className={`px-2 py-1 rounded border cursor-pointer ${showEmotionMeters ? 'bg-amber-50 text-amber-800 border-amber-300' : 'bg-slate-100 text-slate-500 border-slate-200'}`}
+                className={`px-2.5 py-1 rounded-lg border text-xs cursor-pointer transition-all ${showEmotionMeters ? 'bg-amber-50 text-amber-700 border-amber-200 font-bold' : 'bg-slate-50 text-slate-600 border-slate-200'}`}
               >
-                😊 EMOTION METERS
+                Emotions
               </button>
               <button 
                 onClick={() => setShowFencePolygons(!showFencePolygons)}
-                className={`px-2 py-1 rounded border cursor-pointer ${showFencePolygons ? 'bg-rose-50 text-rose-800 border-rose-300' : 'bg-slate-100 text-slate-500 border-slate-200'}`}
+                className={`px-2.5 py-1 rounded-lg border text-xs cursor-pointer transition-all ${showFencePolygons ? 'bg-rose-50 text-rose-700 border-rose-200 font-bold' : 'bg-slate-50 text-slate-600 border-slate-200'}`}
               >
-                ⬡ FENCE POLYGONS
+                Virtual Fence
               </button>
             </div>
           </div>
 
           {/* 4 Video Feeds in 2x2 Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             
             {/* Feed 1: CAM-01 [NORTH MAIN] */}
-            <div className="relative aspect-video bg-slate-950 rounded border-2 border-slate-800 overflow-hidden font-mono text-[10px]">
-              {/* Header bar overlay */}
-              <div className="absolute top-0 left-0 right-0 z-10 bg-slate-900/90 text-cyan-400 px-2 py-1 border-b border-cyan-500/30 flex items-center justify-between">
-                <span className="font-bold text-white flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                  CAM-01 [NORTH MAIN 1080P @ 29.8FPS]
+            <div className="relative aspect-video bg-slate-900 rounded-2xl border border-slate-300 overflow-hidden text-xs">
+              <div className="absolute top-0 left-0 right-0 z-10 bg-slate-900/80 backdrop-blur-xs text-white px-3 py-1.5 flex items-center justify-between text-xs font-semibold">
+                <span className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  Cam 01: Main Gate Entry
                 </span>
-                <span className="text-cyan-300 font-mono">4.2 Mbps</span>
+                <span className="text-slate-300 font-mono text-[11px]">1080p • 30fps</span>
               </div>
-              <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=80" alt="Feed 1" className="w-full h-full object-cover opacity-80" />
+              <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=80" alt="Feed 1" className="w-full h-full object-cover" />
               
-              {/* Target Bounding Box Reticle */}
               {showBoundingBoxes && (
-                <div className="absolute top-1/3 left-1/4 w-36 h-28 border-2 border-cyan-400 bg-cyan-400/10 p-1 flex flex-col justify-between">
-                  <div className="bg-cyan-500 text-slate-950 font-bold px-1 text-[9px] w-max">
-                    ID: #8492 [HUMAN - 98%]
+                <div className="absolute top-1/3 left-1/4 w-36 h-28 border-2 border-blue-400 bg-blue-500/10 rounded p-1.5 flex flex-col justify-between">
+                  <div className="bg-blue-600 text-white font-bold px-1.5 py-0.5 rounded text-[10px] w-max">
+                    Vehicle Detected 98%
                   </div>
-                  <div className="bg-black/80 text-cyan-300 px-1 text-[8px]">
-                    STATUS: CLEAR // VERIFIED CONF: 99.4%
+                  <div className="bg-slate-900/90 text-blue-300 px-1.5 py-0.5 rounded text-[9px]">
+                    Plate: JK-02-AB-9981
                   </div>
                 </div>
               )}
-
-              <div className="absolute bottom-1 left-2 text-[9px] text-slate-300 bg-black/80 px-1.5 py-0.5 rounded border border-slate-800">
-                ENC: H.265 / CBR | SHUTTER: 1/250s
-              </div>
             </div>
 
             {/* Feed 2: CAM-02 [PERIMETER FENCE WEST] - CRITICAL BREACH */}
-            <div className="relative aspect-video bg-slate-950 rounded border-2 border-rose-600 overflow-hidden font-mono text-[10px] shadow-lg shadow-rose-600/20">
-              {/* Header bar overlay */}
-              <div className="absolute top-0 left-0 right-0 z-10 bg-rose-600 text-white px-2 py-1 flex items-center justify-between font-bold">
-                <span className="flex items-center gap-1.5">
+            <div className="relative aspect-video bg-slate-900 rounded-2xl border-2 border-rose-500 overflow-hidden text-xs shadow-md">
+              <div className="absolute top-0 left-0 right-0 z-10 bg-rose-600 text-white px-3 py-1.5 flex items-center justify-between font-bold">
+                <span className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-                  CAM-02 [PERIMETER FENCE WEST] // ALERT: BREACH
+                  Cam 02: West Perimeter Fence
                 </span>
-                <span className="bg-rose-950 text-rose-300 px-1.5 rounded text-[9px]">LIVE TRIPWIRE HIT</span>
+                <span className="bg-rose-800 text-white px-2 py-0.5 rounded text-[10px]">Virtual Tripwire Breach</span>
               </div>
-              <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80" alt="Feed 2 Breach" className="w-full h-full object-cover opacity-75" />
+              <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80" alt="Feed 2 Breach" className="w-full h-full object-cover" />
 
-              {/* Red Breach Bounding Overlay */}
-              <div className="absolute inset-0 border-2 border-rose-500 flex flex-col items-center justify-center p-4">
-                <div className="bg-white/95 border-2 border-rose-600 text-rose-700 px-3 py-1.5 rounded text-center shadow-md">
-                  <p className="font-extrabold text-xs">🔔 VIRTUAL FENCE BREACH // 14:22:08 UTC</p>
+              <div className="absolute inset-0 border-2 border-rose-400/80 flex flex-col items-center justify-center p-4">
+                <div className="bg-white/95 border border-rose-300 text-rose-700 px-4 py-2 rounded-xl text-center shadow-lg">
+                  <p className="font-extrabold text-xs flex items-center gap-1.5">
+                    <AlertTriangle className="w-4 h-4 text-rose-600" />
+                    Intrusion Alert Detected at 14:22:08
+                  </p>
                 </div>
-              </div>
-
-              <div className="absolute bottom-1 left-2 right-2 flex justify-between text-[9px] font-bold">
-                <span className="bg-slate-950/90 text-rose-300 px-1.5 py-0.5 rounded border border-rose-500/50">
-                  AI INFERENCE: YOLOv9-BORDER-DET (0.94 CONF)
-                </span>
-                <span className="bg-rose-600 text-white px-1.5 py-0.5 rounded">
-                  LIVE ESCALATION
-                </span>
               </div>
             </div>
 
             {/* Feed 3: CAM-03 [CHECKPOINT CHARLIE] - EMOTION AI */}
-            <div className="relative aspect-video bg-slate-950 rounded border-2 border-slate-800 overflow-hidden font-mono text-[10px]">
-              <div className="absolute top-0 left-0 right-0 z-10 bg-slate-900/90 text-amber-400 px-2 py-1 border-b border-amber-500/30 flex items-center justify-between">
-                <span className="font-bold text-white">CAM-03 [CHECKPOINT CHARLIE - BOOTH 3]</span>
-                <span className="text-amber-400 font-bold">AI EMOTION ACTIVE FPS: 60.0</span>
+            <div className="relative aspect-video bg-slate-900 rounded-2xl border border-slate-300 overflow-hidden text-xs">
+              <div className="absolute top-0 left-0 right-0 z-10 bg-slate-900/80 backdrop-blur-xs text-white px-3 py-1.5 flex items-center justify-between text-xs font-semibold">
+                <span className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-amber-400" />
+                  Cam 03: Checkpoint Booth 3
+                </span>
+                <span className="text-amber-300 font-mono text-[11px]">Emotion AI Active</span>
               </div>
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80" alt="Feed 3" className="w-full h-full object-cover opacity-80" />
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80" alt="Feed 3" className="w-full h-full object-cover" />
 
-              {/* Emotion Bounding Reticle */}
               {showEmotionMeters && (
-                <div className="absolute top-1/4 left-1/4 w-36 h-32 border-2 border-amber-400 bg-amber-400/10 p-1 flex flex-col justify-between">
-                  <div className="bg-amber-500 text-slate-950 font-bold px-1 text-[8px]">
-                    POI MATCH: 89% | ID: #99410
+                <div className="absolute top-1/4 left-1/4 w-36 h-28 border-2 border-amber-400 bg-amber-500/10 rounded p-1.5 flex flex-col justify-between">
+                  <div className="bg-amber-500 text-slate-950 font-bold px-1.5 py-0.5 rounded text-[10px] w-max">
+                    POI Match: 89%
                   </div>
-                  <div className="bg-black/90 text-amber-300 p-1 text-[8px] space-y-0.5 border border-amber-500/40">
-                    <p className="font-bold">STATE: . STRESS: AGITATED 88%</p>
-                    <p>MICRO-EXPR: FROWN PULSE: 104 BPM</p>
+                  <div className="bg-slate-900/90 text-amber-300 p-1.5 rounded text-[9px] space-y-0.5">
+                    <p className="font-bold">Agitated (88% Stress)</p>
                   </div>
                 </div>
               )}
             </div>
 
             {/* Feed 4: CAM-04 [BUFFER ZONE] */}
-            <div className="relative aspect-video bg-slate-950 rounded border-2 border-slate-800 overflow-hidden font-mono text-[10px]">
-              <div className="absolute top-0 left-0 right-0 z-10 bg-slate-900/90 text-emerald-400 px-2 py-1 border-b border-emerald-500/30 flex items-center justify-between">
-                <span className="font-bold text-white">CAM-04 [BUFFER ZONE - RADAR OUTPOST]</span>
-                <span className="text-emerald-400 font-bold">IR MONOCHROME SENS: 0.001 LUX</span>
+            <div className="relative aspect-video bg-slate-900 rounded-2xl border border-slate-300 overflow-hidden text-xs">
+              <div className="absolute top-0 left-0 right-0 z-10 bg-slate-900/80 backdrop-blur-xs text-white px-3 py-1.5 flex items-center justify-between text-xs font-semibold">
+                <span className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  Cam 04: Buffer Zone Outpost
+                </span>
+                <span className="text-emerald-300 font-mono text-[11px]">IR Monochrome</span>
               </div>
-              <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80" alt="Feed 4" className="w-full h-full object-cover opacity-70 grayscale" />
-
-              <div className="absolute top-1/3 left-1/3 border border-emerald-400 bg-emerald-950/60 text-emerald-300 p-1.5 text-[8px] font-bold">
-                UNATTENDED VEHICLE // TIME: 08m 14s
-              </div>
-
-              <div className="absolute bottom-1 left-2 text-[8px] text-emerald-400 bg-black/90 px-1.5 py-0.5 rounded border border-emerald-500/40">
-                RADAR INTEGRATION: SEC-04D GPS: 28°36'11"N 77°12'44"E
-              </div>
+              <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80" alt="Feed 4" className="w-full h-full object-cover grayscale" />
             </div>
 
           </div>
 
-          {/* Active Cam Toolbar Bar */}
-          <div className="tactical-card p-2 rounded-md flex flex-wrap items-center justify-between text-[10px] font-bold gap-2">
+          {/* Active Cam Control Bar */}
+          <div className="light-card p-3 flex flex-wrap items-center justify-between text-xs font-medium gap-2">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-1 bg-cyan-100 text-cyan-900 border border-cyan-300 rounded font-extrabold">
-                ACTIVE CAM: CAM-02 (BREACH FOCUS)
+              <span className="px-3 py-1 bg-blue-50 text-blue-700 font-bold rounded-lg border border-blue-200">
+                Focus: Cam 02 (West Perimeter)
               </span>
-              <div className="flex items-center gap-0.5 bg-slate-100 border border-slate-300 rounded p-0.5">
-                <button className="px-1.5 py-0.5 hover:bg-slate-200 text-slate-700">◄</button>
-                <button className="px-1.5 py-0.5 hover:bg-slate-200 text-slate-700">▲</button>
-                <button className="px-1.5 py-0.5 hover:bg-slate-200 text-slate-700">▼</button>
-                <button className="px-1.5 py-0.5 hover:bg-slate-200 text-slate-700">►</button>
-              </div>
-              <button className="px-2 py-1 bg-slate-100 border border-slate-300 rounded text-slate-700 hover:bg-slate-200 cursor-pointer">
-                🔍 ZOOM +
+              <button className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg cursor-pointer">
+                🔍 Zoom In
               </button>
-              <button className="px-2 py-1 bg-slate-100 border border-slate-300 rounded text-slate-700 hover:bg-slate-200 cursor-pointer">
-                🔍 ZOOM -
+              <button className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg cursor-pointer">
+                🔍 Zoom Out
               </button>
             </div>
 
-            <div className="flex items-center gap-1.5">
-              <button className="px-2.5 py-1 bg-slate-100 border border-slate-300 rounded text-slate-800 hover:bg-slate-200 cursor-pointer">📷 SNAPSHOT</button>
-              <button className="px-2.5 py-1 bg-slate-100 border border-slate-300 rounded text-slate-800 hover:bg-slate-200 cursor-pointer">📣 AUDIO BROADCAST</button>
-              <button className="px-2.5 py-1 bg-slate-100 border border-slate-300 rounded text-slate-800 hover:bg-slate-200 cursor-pointer">🔄 REWIND 30s</button>
-              <button className="px-2.5 py-1 bg-cyan-600 text-white rounded font-bold border border-cyan-700 hover:bg-cyan-500 cursor-pointer">💾 BOOKMARK INCIDENT</button>
+            <div className="flex items-center gap-2">
+              <button className="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold rounded-lg cursor-pointer">📷 Snapshot</button>
+              <button className="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold rounded-lg cursor-pointer">📣 Broadcast</button>
+              <button className="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg cursor-pointer shadow-xs">💾 Bookmark Event</button>
             </div>
           </div>
 
         </div>
 
         {/* ========================================================================= */}
-        {/* RIGHT COLUMN: REAL-TIME INCIDENTS STREAM & LOCKDOWN DOCK (3 Cols) */}
+        {/* RIGHT COLUMN: REAL-TIME INCIDENTS & EMERGENCY CONTROLS (3 Cols) */}
         {/* ========================================================================= */}
-        <div className="lg:col-span-3 space-y-3">
+        <div className="lg:col-span-3 space-y-4">
           
           {/* Incidents Feed Panel */}
-          <div className="tactical-card p-3 rounded-md space-y-3">
-            {/* Header */}
-            <div className="flex items-center justify-between pb-2 border-b border-slate-300">
-              <h3 className="font-bold text-xs text-slate-900 uppercase flex items-center gap-1.5">
-                REAL-TIME INCIDENTS
+          <div className="light-card p-5 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h3 className="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <BellRing className="w-4 h-4 text-rose-600 animate-bounce" />
+                Real-Time Alerts
               </h3>
-              <span className="px-2 py-0.5 rounded bg-rose-600 text-white font-mono text-[10px] font-bold">
-                3 UNRESOLVED
+              <span className="px-2.5 py-0.5 rounded-full bg-rose-600 text-white text-xs font-bold shadow-xs">
+                3 Active
               </span>
             </div>
 
-            {/* Incidents Items */}
-            <div className="space-y-2.5 max-h-[calc(100vh-280px)] overflow-y-auto pr-1">
+            <div className="space-y-3 max-h-[calc(100vh-280px)] overflow-y-auto pr-1">
               
-              {/* Incident 1: Critical Breach */}
-              <div className="p-3 rounded-md border-2 border-rose-500 bg-rose-50/50 space-y-2 text-[11px]">
-                <div className="flex items-center justify-between text-rose-700 font-bold border-b border-rose-200 pb-1">
-                  <span className="flex items-center gap-1">
+              {/* Alert 1: Critical Breach */}
+              <div className="p-3.5 rounded-xl border border-rose-200 bg-rose-50/50 space-y-2.5 text-xs">
+                <div className="flex items-center justify-between text-rose-700 font-bold pb-1 border-b border-rose-200/60">
+                  <span className="flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-rose-600 animate-ping" />
-                    💥 CRITICAL // BREACH
+                    Critical Intrusion
                   </span>
-                  <span className="text-[10px]">JUST NOW</span>
+                  <span className="text-[11px] text-rose-500">Just now</span>
                 </div>
-                <h4 className="font-extrabold text-slate-900 text-xs">Virtual Fence Overrun</h4>
-                <p className="text-slate-600 leading-relaxed text-[10px]">
-                  Camera 02 [Sector 07-West]. Unauthorized perimeter vector breach by unidentified subject #039.
+                <h4 className="font-bold text-slate-900">Virtual Fence Overrun</h4>
+                <p className="text-slate-600 leading-relaxed text-xs">
+                  Cam 02 [West Perimeter]. Unauthorized target crossing virtual fence boundary.
                 </p>
-                <div className="p-1.5 bg-rose-100 rounded border border-rose-200 text-[9px] font-bold text-rose-800 flex justify-between">
-                  <span>COORDS: LAT 43.19°N LON 71.02°E</span>
-                  <span>SECTOR AUTO-LOCKED</span>
-                </div>
                 <div className="flex items-center gap-2 pt-1">
                   <button 
                     onClick={() => onAcknowledgeAlert(alerts[0]?.id || 1)}
-                    className="flex-1 py-1 bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 rounded font-bold text-[10px] cursor-pointer"
+                    className="flex-1 py-1.5 bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 rounded-lg font-semibold text-xs cursor-pointer"
                   >
-                    ACKNOWLEDGE
+                    Acknowledge
                   </button>
                   <button 
-                    onClick={() => alert('QRF Rapid Response Force Dispatched to Sector 07-West!')}
-                    className="flex-1 py-1 bg-rose-600 text-white hover:bg-rose-500 rounded font-bold text-[10px] cursor-pointer shadow-xs"
+                    onClick={() => alert('Dispatched Quick Response Unit to Sector 4B West Perimeter!')}
+                    className="flex-1 py-1.5 bg-rose-600 text-white hover:bg-rose-500 rounded-lg font-bold text-xs cursor-pointer shadow-xs"
                   >
-                    🚀 DISPATCH QRF
+                    Dispatch QRF
                   </button>
                 </div>
               </div>
 
-              {/* Incident 2: High Stress Anomaly */}
-              <div className="p-3 rounded-md border border-amber-300 bg-amber-50/40 space-y-2 text-[11px]">
-                <div className="flex items-center justify-between text-amber-800 font-bold border-b border-amber-200 pb-1">
-                  <span>💡 HIGH // STRESS ANOMALY</span>
-                  <span className="text-[10px]">2 MIN AGO</span>
+              {/* Alert 2: High Stress Anomaly */}
+              <div className="p-3.5 rounded-xl border border-amber-200 bg-amber-50/40 space-y-2.5 text-xs">
+                <div className="flex items-center justify-between text-amber-800 font-bold pb-1 border-b border-amber-200/60">
+                  <span>High Stress Anomaly</span>
+                  <span className="text-[11px] text-amber-600">2m ago</span>
                 </div>
-                <h4 className="font-bold text-slate-900 text-xs">Agitated Subject Detected</h4>
-                <p className="text-slate-600 leading-relaxed text-[10px]">
-                  Camera 03 [Booth 03]. 88% micro-tremor stress spike matching biometric watchlist POI #99410.
+                <h4 className="font-bold text-slate-900">Agitated Subject Detected</h4>
+                <p className="text-slate-600 leading-relaxed text-xs">
+                  Cam 03 [Booth 3]. Micro-tremor stress spike matching watchlist POI #99410.
                 </p>
                 <div className="flex items-center gap-2 pt-1">
-                  <button className="flex-1 py-1 bg-white border border-slate-300 text-cyan-800 hover:bg-slate-100 rounded font-bold text-[10px] cursor-pointer">
-                    👁 INSPECT FACE
+                  <button className="flex-1 py-1.5 bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 rounded-lg font-semibold text-xs cursor-pointer">
+                    Inspect Face
                   </button>
-                  <button className="flex-1 py-1 bg-amber-600 text-white hover:bg-amber-500 rounded font-bold text-[10px] cursor-pointer">
-                    📝 FLAG INTERVIEW
+                  <button className="flex-1 py-1.5 bg-amber-600 text-white hover:bg-amber-500 rounded-lg font-bold text-xs cursor-pointer">
+                    Flag Interview
                   </button>
                 </div>
               </div>
 
-              {/* Incident 3: ANPR Match */}
-              <div className="p-3 rounded-md border border-cyan-300 bg-cyan-50/40 space-y-2 text-[11px]">
-                <div className="flex items-center justify-between text-cyan-800 font-bold border-b border-cyan-200 pb-1">
-                  <span>🪪 MEDIUM // ANPR MATCH</span>
-                  <span className="text-[10px]">6 MIN AGO</span>
+              {/* Alert 3: ANPR Match */}
+              <div className="p-3.5 rounded-xl border border-blue-200 bg-blue-50/40 space-y-2.5 text-xs">
+                <div className="flex items-center justify-between text-blue-800 font-bold pb-1 border-b border-blue-200/60">
+                  <span>ANPR Plate Hit</span>
+                  <span className="text-[11px] text-blue-600">6m ago</span>
                 </div>
-                <h4 className="font-bold text-slate-900 text-xs">Plate Match: MH-12-PQ-9001</h4>
-                <p className="text-slate-600 leading-relaxed text-[10px]">
-                  Camera 01 [North Gate]. Tagged as reported stolen commercial carrier. Driver unverified.
+                <h4 className="font-bold text-slate-900">Plate Match: JK-02-AB-9981</h4>
+                <p className="text-slate-600 leading-relaxed text-xs">
+                  Cam 01 [North Gate]. Tagged as reported stolen commercial carrier.
                 </p>
                 <div className="flex items-center gap-2 pt-1">
-                  <button className="flex-1 py-1 bg-cyan-600 text-white hover:bg-cyan-500 rounded font-bold text-[10px] cursor-pointer">
-                    🚧 NOTIFY BARRIER
+                  <button className="flex-1 py-1.5 bg-blue-600 text-white hover:bg-blue-500 rounded-lg font-bold text-xs cursor-pointer">
+                    Notify Barrier
                   </button>
-                  <button className="flex-1 py-1 bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 rounded font-bold text-[10px] cursor-pointer">
-                    DETAILS
+                  <button className="flex-1 py-1.5 bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 rounded-lg font-semibold text-xs cursor-pointer">
+                    View Logs
                   </button>
                 </div>
               </div>
@@ -500,35 +457,33 @@ export default function DashboardView({
           </div>
 
           {/* Bottom Lockout Command Dock */}
-          <div className="tactical-card p-3 rounded-md space-y-2 text-xs">
-            <div className="flex items-center justify-between text-[10px] font-bold text-slate-600 border-b border-slate-200 pb-1">
-              <span>COMMAND DOCK PROTOCOLS</span>
+          <div className="light-card p-5 space-y-3 text-xs">
+            <div className="flex items-center justify-between font-bold text-slate-700 border-b border-slate-100 pb-2">
+              <span className="flex items-center gap-1.5">
+                <Lock className="w-4 h-4 text-rose-600" />
+                Emergency Lockdown
+              </span>
               <span className="text-rose-600 font-bold">DEFCON 3</span>
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-slate-500 mb-1">OPERATOR LOG DISPATCH NOTE</label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Dispatch Log Note</label>
               <input
                 type="text"
                 value={commandInput}
                 onChange={(e) => setCommandInput(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-300 rounded px-2.5 py-1.5 text-xs text-slate-900 font-mono focus:outline-none focus:border-rose-500"
-                placeholder="Type tactical command or dispatch note..."
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-sans focus:outline-none focus:border-rose-500"
+                placeholder="Enter dispatch notes..."
               />
             </div>
 
             <button
-              onClick={() => alert('CRITICAL PROTOCOL EXECUTION: Entire Sector Lockdown & Automated Barrier Protocol Engaged!')}
-              className="w-full py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-xs uppercase tracking-wider rounded border border-rose-700 flex items-center justify-center gap-2 shadow-md cursor-pointer"
+              onClick={() => alert('Sector Lockout Triggered!')}
+              className="w-full py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 shadow-sm cursor-pointer transition-colors"
             >
-              <Lock className="w-4 h-4 fill-current" />
+              <Lock className="w-4 h-4" />
               TRIGGER SECTOR LOCKDOWN
             </button>
-
-            <div className="flex items-center justify-between text-[9px] text-slate-400 font-bold pt-1">
-              <span>SEC-CODE: #MHA-0941-X</span>
-              <span className="text-emerald-600">AUTHORIZATION: VERIFIED</span>
-            </div>
           </div>
 
         </div>
