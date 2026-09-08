@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, ShieldAlert, Car, User, Moon, Zap, Play, CheckCircle2, Smile, Package } from 'lucide-react';
+import { Sparkles, ShieldAlert, Car, Zap, CheckCircle2, Smile, Package } from 'lucide-react';
 
 export default function SimulationController({ cameras, onTriggerEvent }) {
   const [selectedCamId, setSelectedCamId] = useState(cameras[0]?.id || 1);
@@ -7,61 +7,26 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
 
   const presets = [
     {
-      id: 'REACTION_ANALYSIS',
-      title: 'Real-Time Facial Reaction & Emotion Analysis',
-      icon: Smile,
-      color: 'from-pink-600 to-rose-500 text-white',
-      textColor: 'text-pink-600 dark:text-pink-400',
-      description: 'Analyzes facial expressions and stress levels: Detects AGITATED / HIGH STRESS emotion on target near fence line.',
-      data: {
-        camera_id: selectedCamId,
-        event_type: 'REACTION_ANALYSIS',
-        severity: 'CRITICAL',
-        confidence: 0.97,
-        person_name: 'Unknown Target #101',
-        snapshot_path: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
-        message: 'Facial Reaction Analysis Alert: Target exhibiting HIGH STRESS / AGITATED behavior (87% stress score) near perimeter.'
-      }
-    },
-    {
-      id: 'OBJECT_DETECTED',
-      title: 'Object Classification & Threat Identification',
-      icon: Package,
-      color: 'from-amber-600 to-orange-500 text-white',
-      textColor: 'text-amber-600 dark:text-amber-400',
-      description: 'Identifies non-person objects: Unattended Backpack / Hazardous Parcel spotted inside Restricted Zone Alpha.',
-      data: {
-        camera_id: selectedCamId,
-        event_type: 'OBJECT_DETECTED',
-        severity: 'HIGH',
-        confidence: 0.94,
-        snapshot_path: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80',
-        message: 'Object Identification Alert: Unattended Backpack detected inside Restricted Zone Alpha (94% confidence).'
-      }
-    },
-    {
       id: 'INTRUSION',
-      title: 'Border Fence Breach Intrusion',
+      title: 'Perimeter Intrusion Event',
       icon: ShieldAlert,
-      color: 'from-rose-600 to-red-500 text-white',
-      textColor: 'text-rose-600 dark:text-rose-400',
-      description: 'Simulates 2 unauthorized individuals breaching virtual fence zone at BOP Gate 4.',
+      color: 'bg-rose-600 hover:bg-rose-500 text-white',
+      description: 'Simulates 2 unauthorized targets crossing virtual fence boundary.',
       data: {
         camera_id: selectedCamId,
         event_type: 'INTRUSION',
         severity: 'CRITICAL',
         confidence: 0.96,
         snapshot_path: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80',
-        message: 'Critical Perimeter Intrusion detected at Fence Gate 4! 2 individuals crossing virtual fence.'
+        message: 'Critical Perimeter Intrusion detected at Gate 4! 2 targets crossing virtual fence.'
       }
     },
     {
       id: 'ANPR_MATCH',
-      title: 'ANPR Watchlist Plate Hit',
+      title: 'Plate Watchlist Hit',
       icon: Car,
-      color: 'from-cyan-600 to-blue-500 text-white',
-      textColor: 'text-cyan-600 dark:text-cyan-400',
-      description: 'Simulates ANPR reading plate "JK-02-AB-9981" matching high-risk vehicle watchlist.',
+      color: 'bg-blue-600 hover:bg-blue-500 text-white',
+      description: 'Simulates ANPR reading plate "JK-02-AB-9981" matching vehicle watchlist.',
       data: {
         camera_id: selectedCamId,
         event_type: 'ANPR_MATCH',
@@ -69,7 +34,38 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
         plate_number: 'JK-02-AB-9981',
         confidence: 0.98,
         snapshot_path: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop&q=80',
-        message: 'Watchlist Plate Match: JK-02-AB-9981 detected entering Checkpost Bravo.'
+        message: 'Watchlist Plate Match: JK-02-AB-9981 detected entering checkpost.'
+      }
+    },
+    {
+      id: 'OBJECT_DETECTED',
+      title: 'Unattended Object Detection',
+      icon: Package,
+      color: 'bg-amber-600 hover:bg-amber-500 text-white',
+      description: 'Simulates unattended bag or parcel detected in restricted zone.',
+      data: {
+        camera_id: selectedCamId,
+        event_type: 'OBJECT_DETECTED',
+        severity: 'HIGH',
+        confidence: 0.94,
+        snapshot_path: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80',
+        message: 'Object Alert: Unattended Backpack detected inside Restricted Zone Alpha.'
+      }
+    },
+    {
+      id: 'REACTION_ANALYSIS',
+      title: 'Target Suspicious Behavior',
+      icon: Smile,
+      color: 'bg-indigo-600 hover:bg-indigo-500 text-white',
+      description: 'Simulates suspicious behavior pattern detected near perimeter.',
+      data: {
+        camera_id: selectedCamId,
+        event_type: 'REACTION_ANALYSIS',
+        severity: 'CRITICAL',
+        confidence: 0.97,
+        person_name: 'Target #101',
+        snapshot_path: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop&q=80',
+        message: 'Reaction Alert: Target exhibiting suspicious behavior near fence.'
       }
     }
   ];
@@ -85,69 +81,69 @@ export default function SimulationController({ cameras, onTriggerEvent }) {
   };
 
   return (
-    <div className="p-4 md:p-6 space-y-6 max-w-[1920px] mx-auto">
-      {/* Banner */}
-      <div className="glass-panel-glow p-6 rounded-2xl border border-cyan-300 dark:border-cyan-500/40 bg-gradient-to-r from-slate-50 via-white to-cyan-50 dark:from-slate-950 dark:via-slate-900 dark:to-cyan-950/40 space-y-3 shadow-xs">
+    <div className="p-4 md:p-6 space-y-6 max-w-[1920px] mx-auto font-sans">
+      {/* Header */}
+      <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs space-y-3">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-cyan-100 dark:bg-cyan-500/20 border border-cyan-300 dark:border-cyan-500/50 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
-            <Sparkles className="w-7 h-7" />
+          <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950 flex items-center justify-center text-blue-600 dark:text-blue-400">
+            <Sparkles className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="font-tactical text-2xl font-bold text-cyan-700 dark:text-cyan-400 uppercase tracking-wider">
-              REAL-TIME AI DETECTION, OBJECT & FACIAL REACTION ENGINE
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              AI Detection Simulator
             </h2>
-            <p className="text-xs text-slate-600 dark:text-slate-300">
-              Trigger facial emotion analysis, object identification, and intrusion report events to test real-time WebSocket alert processing.
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Trigger simulated surveillance alerts to test real-time notification feeds.
             </p>
           </div>
         </div>
 
         {lastTriggered && (
-          <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/80 rounded-lg border border-emerald-300 dark:border-emerald-500/40 text-xs font-mono text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span>AI Event Broadcast Triggered: <strong>{lastTriggered}</strong></span>
+          <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950 rounded-lg border border-emerald-200 dark:border-emerald-800 text-xs font-semibold text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <span>Simulated Event Triggered: <strong>{lastTriggered}</strong></span>
           </div>
         )}
       </div>
 
       {/* Camera Target Selector */}
-      <div className="flex items-center gap-3 bg-white/90 dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
-        <span className="text-xs font-mono text-slate-700 dark:text-slate-300 uppercase font-bold">Target CCTV Stream for AI Analysis:</span>
+      <div className="flex items-center gap-3 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs">
+        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Target Camera Stream:</span>
         <select
           value={selectedCamId}
           onChange={(e) => setSelectedCamId(Number(e.target.value))}
-          className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-cyan-700 dark:text-cyan-400 font-mono text-xs rounded-lg px-3 py-2 font-bold focus:outline-none focus:border-cyan-500 cursor-pointer"
+          className="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-900 dark:text-white text-xs rounded-lg px-3 py-1.5 font-medium cursor-pointer"
         >
           {cameras.map((c) => (
             <option key={c.id} value={c.id}>
-              {c.name} ({c.location || 'BOP Sector'})
+              {c.name} ({c.location || 'Gate'})
             </option>
           ))}
         </select>
       </div>
 
-      {/* Trigger Cards Grid */}
+      {/* Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {presets.map((p) => {
           const Icon = p.icon;
           return (
-            <div key={p.id} className="glass-panel rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4 hover:border-cyan-400 dark:hover:border-cyan-500/40 transition-all flex flex-col justify-between shadow-xs">
-              <div className="space-y-3">
+            <div key={p.id} className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 space-y-4 flex flex-col justify-between shadow-xs">
+              <div className="space-y-2">
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-center ${p.textColor}`}>
-                    <Icon className="w-6 h-6" />
+                  <div className="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-300">
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="font-tactical text-lg font-bold text-slate-900 dark:text-slate-100 uppercase">{p.title}</h3>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">{p.title}</h3>
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{p.description}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">{p.description}</p>
               </div>
 
               <button
                 onClick={() => handleTrigger(p)}
-                className={`w-full py-3 rounded-xl font-tactical font-bold text-white text-sm uppercase tracking-wider bg-gradient-to-r ${p.color} hover:brightness-110 flex items-center justify-center gap-2 shadow-md cursor-pointer`}
+                className={`w-full py-2.5 rounded-xl font-semibold text-xs text-white flex items-center justify-center gap-2 cursor-pointer shadow-xs ${p.color}`}
               >
                 <Zap className="w-4 h-4 fill-current" />
-                Trigger {p.id} AI Event
+                Trigger {p.title}
               </button>
             </div>
           );

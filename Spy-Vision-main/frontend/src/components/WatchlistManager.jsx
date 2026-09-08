@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import { Users, Car, Plus, Trash2, Edit3, ShieldAlert, CheckCircle, Search, AlertOctagon } from 'lucide-react';
+import { Users, Car, Plus, Trash2, Search } from 'lucide-react';
 
 export default function WatchlistManager({ 
   persons, 
   vehicles, 
   onCreatePerson, 
-  onUpdatePerson, 
   onDeletePerson,
   onCreateVehicle,
-  onUpdateVehicle,
   onDeleteVehicle
 }) {
-  const [activeTab, setActiveTab] = useState('persons'); // 'persons' | 'vehicles'
+  const [activeTab, setActiveTab] = useState('persons');
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  // Form states for modal
   const [personForm, setPersonForm] = useState({
     full_name: '',
     suspect_id: '',
@@ -71,50 +68,49 @@ export default function WatchlistManager({
   };
 
   return (
-    <div className="p-4 md:p-6 space-y-6 max-w-[1920px] mx-auto">
-      {/* Header & Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/90 dark:bg-slate-900/80 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xs">
+    <div className="p-4 md:p-6 space-y-6 max-w-[1920px] mx-auto font-sans">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs">
         <div>
-          <h2 className="font-tactical text-xl font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider flex items-center gap-2">
-            <Users className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
-            Watchlist & Persons of Interest Database
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            Watchlist Database
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Manage biometric face recognition profiles and ANPR license plate watchlist flags.
+            Manage face recognition profiles and ANPR license plate watchlist entries.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Search bar */}
           <div className="relative">
-            <Search className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3 top-2.5" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
             <input
               type="text"
-              placeholder="Search suspect ID or plate..."
+              placeholder="Search suspect or plate..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-slate-200 font-mono focus:border-cyan-500 focus:outline-none w-64 shadow-2xs"
+              className="bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none w-60 font-medium"
             />
           </div>
 
           <button
             onClick={() => setShowModal(true)}
-            className="px-4 py-2 bg-gradient-to-r from-cyan-600 to-cyan-500 text-white dark:text-slate-950 font-bold text-xs rounded-lg hover:brightness-110 flex items-center gap-1.5 shadow-md shadow-cyan-500/20 cursor-pointer"
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-lg flex items-center gap-1.5 shadow-xs cursor-pointer"
           >
-            <Plus className="w-4 h-4 stroke-[3]" />
-            Add {activeTab === 'persons' ? 'Suspect Profile' : 'Flagged Vehicle'}
+            <Plus className="w-4 h-4" />
+            Add {activeTab === 'persons' ? 'Suspect' : 'Vehicle'}
           </button>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-2">
+      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-700 pb-2">
         <button
           onClick={() => setActiveTab('persons')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold font-tactical tracking-wider transition-all cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer transition-all ${
             activeTab === 'persons'
-              ? 'bg-cyan-600 text-white shadow-md'
-              : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800'
+              ? 'bg-blue-600 text-white shadow-xs'
+              : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
           }`}
         >
           <Users className="w-4 h-4" />
@@ -123,51 +119,45 @@ export default function WatchlistManager({
 
         <button
           onClick={() => setActiveTab('vehicles')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold font-tactical tracking-wider transition-all cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer transition-all ${
             activeTab === 'vehicles'
-              ? 'bg-cyan-600 text-white shadow-md'
-              : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800'
+              ? 'bg-blue-600 text-white shadow-xs'
+              : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
           }`}
         >
           <Car className="w-4 h-4" />
-          ANPR Vehicle Watchlist ({vehicles.length})
+          Vehicle Watchlist ({vehicles.length})
         </button>
       </div>
 
-      {/* Content Grid */}
+      {/* Grid Content */}
       {activeTab === 'persons' ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredPersons.map((p) => (
-            <div key={p.id} className="glass-panel rounded-xl p-4 border border-slate-200 dark:border-slate-800 flex gap-4 relative group hover:border-cyan-400 dark:hover:border-cyan-500/40 transition-all shadow-xs">
-              {/* Photo */}
-              <div className="w-24 h-28 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex-shrink-0">
+            <div key={p.id} className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 flex gap-4 relative group shadow-xs">
+              <div className="w-20 h-24 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-700 flex-shrink-0 border border-slate-200 dark:border-slate-600">
                 <img src={p.photo_url || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80'} alt={p.full_name} className="w-full h-full object-cover" />
               </div>
 
-              {/* Info */}
               <div className="flex-1 space-y-1 text-xs">
                 <div className="flex items-start justify-between">
-                  <span className={`px-1.5 py-0.5 rounded text-[9px] font-mono font-bold border ${
-                    p.threat_level === 'CRITICAL' ? 'bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-400 border-rose-300 dark:border-rose-500/40' :
-                    p.threat_level === 'HIGH' ? 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-500/40' : 'bg-cyan-100 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-400 border-cyan-300 dark:border-cyan-500/40'
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
+                    p.threat_level === 'CRITICAL' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300' :
+                    p.threat_level === 'HIGH' ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300' : 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300'
                   }`}>
                     {p.threat_level || 'HIGH'}
                   </span>
                   <button
                     onClick={() => onDeletePerson(p.id)}
-                    className="text-slate-400 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity p-1 cursor-pointer"
+                    className="text-slate-400 hover:text-rose-600 cursor-pointer p-1"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                <h3 className="font-tactical text-base font-bold text-slate-900 dark:text-slate-100">{p.full_name}</h3>
-                <p className="font-mono text-[11px] text-cyan-700 dark:text-cyan-400 font-semibold">ID: {p.suspect_id}</p>
-                <p className="text-[11px] text-slate-600 dark:text-slate-400 line-clamp-2">{p.notes}</p>
-
-                <div className="pt-2 text-[10px] font-mono text-slate-500 dark:text-slate-500">
-                  Status: <strong className="text-amber-600 dark:text-amber-400">{p.status || 'WANTED'}</strong>
-                </div>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">{p.full_name}</h3>
+                <p className="text-[11px] text-blue-600 dark:text-blue-400 font-semibold">ID: {p.suspect_id}</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2">{p.notes}</p>
               </div>
             </div>
           ))}
@@ -175,14 +165,14 @@ export default function WatchlistManager({
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredVehicles.map((v) => (
-            <div key={v.id} className="glass-panel rounded-xl p-4 border border-slate-200 dark:border-slate-800 space-y-3 relative group hover:border-cyan-400 dark:hover:border-cyan-500/40 transition-all shadow-xs">
+            <div key={v.id} className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 space-y-3 relative shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-lg font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-slate-950 px-3 py-1 rounded border border-amber-300 dark:border-amber-500/40">
+                <span className="text-base font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-slate-700 px-3 py-1 rounded-md border border-amber-200 dark:border-amber-800">
                   {v.plate_number}
                 </span>
                 <button
                   onClick={() => onDeleteVehicle(v.id)}
-                  className="text-slate-400 dark:text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity p-1 cursor-pointer"
+                  className="text-slate-400 hover:text-rose-600 cursor-pointer p-1"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -190,144 +180,113 @@ export default function WatchlistManager({
 
               <div className="space-y-1 text-xs">
                 <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-medium">
-                  <Car className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                  <Car className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   <span>{v.vehicle_type || 'Vehicle'} • {v.color || 'Dark'}</span>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 text-[11px]">{v.notes || 'Flagged for surveillance'}</p>
-              </div>
-
-              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[10px] font-mono">
-                <span className="text-slate-500 dark:text-slate-500">Threat: <strong className="text-rose-600 dark:text-rose-400">{v.threat_level || 'HIGH'}</strong></span>
-                <span className="text-emerald-600 dark:text-emerald-400 font-bold">ANPR ACTIVE</span>
+                <p className="text-slate-500 dark:text-slate-400 text-[11px]">{v.notes || 'Surveillance watchlist flag'}</p>
               </div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Add Modal */}
+      {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 dark:bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass-panel-glow max-w-md w-full rounded-2xl p-6 space-y-4 border border-cyan-400 dark:border-cyan-500/40">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
-              <h3 className="font-tactical text-lg font-bold text-cyan-700 dark:text-cyan-400 uppercase">
-                Add New {activeTab === 'persons' ? 'Suspect Profile' : 'Flagged Vehicle'}
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-800 max-w-md w-full rounded-2xl p-6 space-y-4 border border-slate-200 dark:border-slate-700 shadow-xl">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                Add {activeTab === 'persons' ? 'Suspect Profile' : 'Flagged Vehicle'}
               </h3>
-              <button onClick={() => setShowModal(false)} className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer">✕</button>
+              <button onClick={() => setShowModal(false)} className="text-slate-400 hover:text-slate-700 cursor-pointer">✕</button>
             </div>
 
             {activeTab === 'persons' ? (
-              <form onSubmit={handleSavePerson} className="space-y-3 text-xs">
+              <form onSubmit={handleSavePerson} className="space-y-3 text-xs font-medium">
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 font-mono mb-1 font-semibold">Full Name</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">Full Name</label>
                   <input
                     type="text"
                     required
                     value={personForm.full_name}
                     onChange={(e) => setPersonForm({...personForm, full_name: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded px-3 py-2 text-slate-900 dark:text-slate-100"
+                    className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-slate-900 dark:text-white"
                     placeholder="e.g. Vikram Singh"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 font-mono mb-1 font-semibold">Suspect ID / Token</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">Suspect ID</label>
                   <input
                     type="text"
                     required
                     value={personForm.suspect_id}
                     onChange={(e) => setPersonForm({...personForm, suspect_id: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded px-3 py-2 text-slate-900 dark:text-slate-100 font-mono"
-                    placeholder="e.g. POI-2026-9041"
+                    className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-slate-900 dark:text-white"
+                    placeholder="e.g. POI-9041"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="block text-slate-600 dark:text-slate-400 font-mono mb-1 font-semibold">Threat Level</label>
-                    <select
-                      value={personForm.threat_level}
-                      onChange={(e) => setPersonForm({...personForm, threat_level: e.target.value})}
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded px-2 py-2 text-rose-600 dark:text-rose-400 font-mono font-bold cursor-pointer"
-                    >
-                      <option value="CRITICAL">CRITICAL</option>
-                      <option value="HIGH">HIGH</option>
-                      <option value="MEDIUM">MEDIUM</option>
-                      <option value="LOW">LOW</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-slate-600 dark:text-slate-400 font-mono mb-1 font-semibold">Status</label>
-                    <select
-                      value={personForm.status}
-                      onChange={(e) => setPersonForm({...personForm, status: e.target.value})}
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded px-2 py-2 text-amber-600 dark:text-amber-400 font-mono font-bold cursor-pointer"
-                    >
-                      <option value="WANTED">WANTED</option>
-                      <option value="SUSPECT">SUSPECT</option>
-                      <option value="PERSON_OF_INTEREST">POI</option>
-                    </select>
-                  </div>
+                <div>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">Threat Level</label>
+                  <select
+                    value={personForm.threat_level}
+                    onChange={(e) => setPersonForm({...personForm, threat_level: e.target.value})}
+                    className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-slate-900 dark:text-white cursor-pointer"
+                  >
+                    <option value="CRITICAL">CRITICAL</option>
+                    <option value="HIGH">HIGH</option>
+                    <option value="MEDIUM">MEDIUM</option>
+                    <option value="LOW">LOW</option>
+                  </select>
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 font-mono mb-1 font-semibold">Notes / Intelligence</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">Notes</label>
                   <textarea
                     rows={2}
                     value={personForm.notes}
                     onChange={(e) => setPersonForm({...personForm, notes: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded px-3 py-2 text-slate-900 dark:text-slate-100"
-                    placeholder="Brief description..."
+                    className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-slate-900 dark:text-white"
+                    placeholder="Notes..."
                   />
                 </div>
-                <button type="submit" className="w-full py-2.5 bg-cyan-600 text-white font-bold font-tactical rounded-lg hover:bg-cyan-500 cursor-pointer shadow-md">
-                  Save Suspect to Watchlist
+                <button type="submit" className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg cursor-pointer">
+                  Save Suspect
                 </button>
               </form>
             ) : (
-              <form onSubmit={handleSaveVehicle} className="space-y-3 text-xs">
+              <form onSubmit={handleSaveVehicle} className="space-y-3 text-xs font-medium">
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 font-mono mb-1 font-semibold">License Plate Number</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">License Plate Number</label>
                   <input
                     type="text"
                     required
                     value={vehicleForm.plate_number}
                     onChange={(e) => setVehicleForm({...vehicleForm, plate_number: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded px-3 py-2 text-amber-700 dark:text-amber-400 font-mono font-bold"
+                    className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-slate-900 dark:text-white font-bold"
                     placeholder="e.g. JK-02-AB-9981"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="block text-slate-600 dark:text-slate-400 font-mono mb-1 font-semibold">Vehicle Type</label>
-                    <input
-                      type="text"
-                      value={vehicleForm.vehicle_type}
-                      onChange={(e) => setVehicleForm({...vehicleForm, vehicle_type: e.target.value})}
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded px-3 py-2 text-slate-900 dark:text-slate-100"
-                      placeholder="e.g. SUV"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-slate-600 dark:text-slate-400 font-mono mb-1 font-semibold">Color</label>
-                    <input
-                      type="text"
-                      value={vehicleForm.color}
-                      onChange={(e) => setVehicleForm({...vehicleForm, color: e.target.value})}
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded px-3 py-2 text-slate-900 dark:text-slate-100"
-                      placeholder="e.g. Dark Grey"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">Vehicle Type</label>
+                  <input
+                    type="text"
+                    value={vehicleForm.vehicle_type}
+                    onChange={(e) => setVehicleForm({...vehicleForm, vehicle_type: e.target.value})}
+                    className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-slate-900 dark:text-white"
+                    placeholder="e.g. SUV"
+                  />
                 </div>
                 <div>
-                  <label className="block text-slate-600 dark:text-slate-400 font-mono mb-1 font-semibold">Notes</label>
+                  <label className="block text-slate-600 dark:text-slate-400 mb-1">Notes</label>
                   <textarea
                     rows={2}
                     value={vehicleForm.notes}
                     onChange={(e) => setVehicleForm({...vehicleForm, notes: e.target.value})}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded px-3 py-2 text-slate-900 dark:text-slate-100"
-                    placeholder="Flag reason..."
+                    className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg px-3 py-2 text-slate-900 dark:text-white"
+                    placeholder="Notes..."
                   />
                 </div>
-                <button type="submit" className="w-full py-2.5 bg-cyan-600 text-white font-bold font-tactical rounded-lg hover:bg-cyan-500 cursor-pointer shadow-md">
-                  Flag License Plate in ANPR
+                <button type="submit" className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg cursor-pointer">
+                  Save Vehicle
                 </button>
               </form>
             )}
