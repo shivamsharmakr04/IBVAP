@@ -1,6 +1,24 @@
-.env
-env
-__init__.py
-venv
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
 venv/
-venv\
+env/
+
+# Environment and secrets
+.env
+
+# Local database
+*.db
+*.sqlite
+*.sqlite3
+
+# Runtime media
+media/*
+!media/.gitkeep
+
+# Test/cache
+.pytest_cache/
+.coverage
+htmlcov/
