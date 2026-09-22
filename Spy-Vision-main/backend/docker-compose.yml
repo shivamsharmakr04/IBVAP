@@ -18,8 +18,10 @@ services:
     restart: unless-stopped
     depends_on:
       - db
-    env_file:
-      - .env
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/ibvap
+      AI_API_KEY: ${AI_API_KEY:-change-this-secret}
+      MEDIA_ROOT: /app/media
     ports:
       - "8000:8000"
     volumes:
